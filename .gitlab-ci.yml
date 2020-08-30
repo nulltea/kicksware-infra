@@ -1,0 +1,49 @@
+image:
+    name: docker/compose:1.25.0
+    entrypoint: [""]
+
+services:
+    - docker:stable-dind
+
+stages:
+    - init
+    - build
+    - test
+    - deploy
+
+before_script: &common-before
+    - docker version
+    - docker-compose version
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+    - export SOURCE_DIR="/source/repos/$CI_PROJECT_NAME"
+    - apk add make
+
+
+#---build stage---#
+
+
+#----------------#
+
+#---test stage---#
+
+#----------------#
+
+#---deploy stage---#
+
+
+deploy-stack-step:
+    stage: deploy
+    before_script:
+      - *common-before
+      - export DYNAMIC_ENV_VAR=PROD
+      - make mongo-backup
+    tags:
+      - middleware
+      - deploy
+    script:
+      - echo setting up env $DYNAMIC_ENV_VAR
+      - make stack
+    after_script:
+      - make mongo-restore
+
+#----------------#

@@ -1,0 +1,10 @@
+# Env files
+*.env
+
+# Editors
+.idea/
+.vscode/
+
+keys/
+cert/
+backup/mongo/

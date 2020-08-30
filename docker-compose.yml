@@ -1,0 +1,71 @@
+version: '3.7'
+services:
+  mongodb:
+    image: mongo:3.6.17
+    container_name: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DB}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    ports:
+      - 27017:27017
+      - 27018:27017
+    networks:
+      - web
+      - data
+    volumes:
+      - type: bind
+        source: /source/backup/mongo
+        target: /backup
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
+    restart: always
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - discovery.type=single-node
+    labels:
+      - traefik.http.routers.elasticsearch.rule=Host(`ops.kicksware.com`) && PathPrefix(`/elastic`)
+      - traefik.http.routers.elasticsearch.tls=true
+      - traefik.http.routers.elasticsearch.tls.certresolver=le
+      - traefik.docker.network=web
+    networks:
+      - web
+      - data
+    ports:
+    - 9200:9200
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.6.1
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=https://ops.kicksware.com/elastic
+    labels:
+      - traefik.http.routers.kibana.rule=Host(`ops.kicksware.com`) && PathPrefix(`/app/kibana`)
+      - traefik.http.routers.kibana.tls=true
+      - traefik.http.routers.kibana.tls.certresolver=le
+      - traefik.docker.network=web
+    ports:
+      - 5601:5601
+    networks:
+      - web
+      - data
+    logging:
+      driver: none
+
+networks:
+  data:
+    external: true
+  web:
+    external: true
+
+volumes:
+  elasticsearch-data:
