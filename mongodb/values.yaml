@@ -1,0 +1,64 @@
+project: kicksware
+component: mongodb
+nameOverride: ""
+fullnameOverride: ""
+baseDirL: &baseDir /run/desktop/mnt/host/wsl
+sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/gateway
+replicaSetName: rs0
+
+replicaCount: 1
+image:
+  repository: mongo
+  tag: 3.6.19
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 27017
+
+ingress:
+  enabled: true
+  entrypoints:
+    - web
+    - websecure
+  routes:
+    - host: db.kicksware.com
+      protocol: tcp
+      middlewares: []
+      services:
+        - name: mongodb
+          port: 27017
+  tls:
+    enabled: true
+    certResolver: le
+    passthrough: true
+# https://github.com/containous/slides/tree/master/demo/traefik-v2/mongo
+
+storage:
+  enabled: true
+  hostPathBase: *baseDir
+  hostPath: /source/storage/backup
+  storageClass: manual
+  size: 10Gi
+  accessModes:
+    - ReadWriteOnce
+
+volumes:
+  - name: cert
+    hostPathBase: /run/desktop/mnt/host/wsl
+    hostPath: /source/cert
+    mountPath: /cert
+    type: Directory
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 25
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+serviceAccount:
+  create: true
+  name: ""

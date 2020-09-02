@@ -1,0 +1,13 @@
+This is {{ .Values.component }} of {{ .Values.project }} application project.
+From outside the cluster, the {{ .Values.component }} service is available by URL:
+{{- if .Values.ingress.enabled }}
+{{- range .Values.ingress.routes }}
+  - mongodb://{{ .host }}:{{ if $.Values.ingress.tls }}443{{- else }}80{{ end }}/{{ .protocol }}
+{{- end }}
+{{- else }}
+Lookup external ingress controller configuration.
+{{- end }}
+For more info contact project maintainers:
+{{- range .Chart.Maintainers }}
+  - {{ .Name }}
+{{- end }}

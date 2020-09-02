@@ -1,0 +1,34 @@
+{{- if .Values.storage.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "chart.fullname" . }}.storage
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  storageClassName: {{ .Values.storage.storageClass }}
+  capacity:
+    storage: {{ .Values.storage.size }}
+  accessModes:
+    {{- range .Values.storage.accessModes }}
+    - {{ . }}
+  {{- end }}
+  hostPath:
+    path: {{ .Values.storage.hostPathBase}}{{ .Values.storage.hostPath }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "chart.fullname" . }}.claim
+spec:
+  storageClassName: {{ .Values.storage.storageClass }}
+  accessModes:
+    {{- range .Values.storage.accessModes }}
+    - {{ . }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.storage.size }}
+---
+  {{- end }}
