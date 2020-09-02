@@ -24,6 +24,6 @@ spec:
   {{- if .Values.ingress.tls.enabled }}
   tls:
     passthrough: {{ .Values.ingress.tls.passthrough }}
-    secretName: mongo-tls2
+    secretName: {{ .Values.ingress.tls.secretName }}
   {{- end }}
   {{- end }}

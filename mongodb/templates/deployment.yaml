@@ -38,18 +38,29 @@ spec:
           ports:
             - name: mongodb
               containerPort: {{ .Values.service.port }}
-          env: []
-          command:
-            - mongod
-          args:
-            - --dbpath=/data/db
-            - --port={{ .Values.service.port }}
-            - --bind_ip=0.0.0.0
+          envFrom:
+            - configMapRef:
+                name: {{ template "chart.fullname" . }}.env
+            - secretRef:
+                name: mongo-auth
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-auth
+                  key: MONGO_USER
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-auth
+                  key: MONGO_PASSWORD
           volumeMounts:
             - name: data
               mountPath: /data/db
-            - name: tls
-              mountPath: /certs
+          {{- range .Values.volumes }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+          {{- end }}
           livenessProbe:
             exec:
               command:
@@ -64,10 +75,20 @@ spec:
                 - db.adminCommand('ping')
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                 - sh
+                 - -c
+                 - mongorestore -u=${MONGO_USER} -p=${MONGO_PASSWORD} /backup
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - mongodump --db={MONGO_DB} -u=${MONGO_USER} -p=${MONGO_PASSWORD} --out=/backup
       volumes:
-        - name: tls
-          secret:
-            secretName: mongo-tls
         {{- if .Values.storage.enabled }}
         - name: data
           persistentVolumeClaim:
@@ -75,5 +96,13 @@ spec:
         {{- else }}
         - name: data
           emptyDir: {}
+        {{- end }}
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
+          {{- if .hostPath }}
+          hostPath:
+            path: {{ .hostPathBase }}{{ .hostPath }}
+            type: {{ .type }}
+          {{- end }}
         {{- end }}
 

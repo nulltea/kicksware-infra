@@ -3,7 +3,7 @@ component: mongodb
 nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
-sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/gateway
+sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/tool-stack
 
 image:
   repository: mongo
@@ -32,6 +32,7 @@ ingress:
           port: 27017
   tls:
     enabled: true
+    secretName: mongo-tls
     passthrough: false
 
 storage:
@@ -45,10 +46,18 @@ storage:
 
 volumes:
   - name: cert
-    hostPathBase: /run/desktop/mnt/host/wsl
+    hostPathBase: *baseDir
     hostPath: /source/cert
     mountPath: /cert
     type: Directory
+  - name: backup
+    hostPathBase: *baseDir
+    hostPath: /source/backup/mongo
+    mountPath: /backup
+    type: Directory
+
+environment:
+  db: sneakerResaleDB
 
 resources: {}
 
