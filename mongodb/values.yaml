@@ -4,13 +4,16 @@ nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
 sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/gateway
-replicaSetName: rs0
 
-replicaCount: 1
 image:
   repository: mongo
   tag: 3.6.19
   pullPolicy: IfNotPresent
+
+deployment:
+  stateful: false
+  replicaCount: 1
+  replicaSetName: rs0
 
 service:
   type: ClusterIP
@@ -24,18 +27,15 @@ ingress:
   routes:
     - host: db.kicksware.com
       protocol: tcp
-      middlewares: []
       services:
         - name: mongodb
           port: 27017
   tls:
     enabled: true
-    certResolver: le
-    passthrough: true
-# https://github.com/containous/slides/tree/master/demo/traefik-v2/mongo
+    passthrough: false
 
 storage:
-  enabled: true
+  enabled: false
   hostPathBase: *baseDir
   hostPath: /source/storage/backup
   storageClass: manual

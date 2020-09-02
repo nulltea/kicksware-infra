@@ -1,19 +1,30 @@
 apiVersion: apps/v1
+{{- if .Values.deployment.stateful}}
+kind: StatefulSet
+{{- else }}
 kind: Deployment
+{{- end }}
 metadata:
   name: mongodb
   labels:
   {{- include "chart.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  {{- end }}
+  {{- if .Values.deployment.stateful}}
+  updateStrategy:
+    type: RollingUpdate
+  {{- else }}
   strategy:
     type: RollingUpdate
   {{- end }}
   selector:
     matchLabels:
   {{- include "chart.selectorLabels" . | nindent 6 }}
-  # serviceName: mongodb-6c3816ec85f85dafe
+  {{- if .Values.deployment.stateful}}
+  serviceName: mongodb-6c3816ec85f85dafe
+  {{- end }}
   template:
     metadata:
       labels:
@@ -32,12 +43,13 @@ spec:
             - mongod
           args:
             - --dbpath=/data/db
-            - --replSet={{ .Values.replicaSetName }}
             - --port={{ .Values.service.port }}
             - --bind_ip=0.0.0.0
           volumeMounts:
             - name: data
               mountPath: /data/db
+            - name: tls
+              mountPath: /certs
           livenessProbe:
             exec:
               command:
@@ -53,6 +65,9 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
+        - name: tls
+          secret:
+            secretName: mongo-tls
         {{- if .Values.storage.enabled }}
         - name: data
           persistentVolumeClaim:
@@ -60,5 +75,5 @@ spec:
         {{- else }}
         - name: data
           emptyDir: {}
-  {{- end }}
+        {{- end }}
 
