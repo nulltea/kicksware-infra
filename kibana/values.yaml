@@ -1,0 +1,53 @@
+project: kicksware
+component: kibana
+nameOverride: ""
+fullnameOverride: ""
+baseDirL: &baseDir /run/desktop/mnt/host/wsl
+
+elasticsearchHost: https://ops.kicksware.com/elastic
+
+image:
+  repository: docker.elastic.co/kibana/kibana
+  tag: latest
+  pullPolicy: IfNotPresent
+
+deployment:
+  replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 5601
+
+ingress:
+  enabled: true
+  entrypoints:
+    - web
+    - websecure
+  tls:
+    enabled: true
+    certResolver: le
+  routes:
+    - host: ops.kicksware.com
+      paths:
+        - /kibana
+        - /app/kibana
+      middlewares: []
+      services:
+        - name: kibana
+          port: 5601
+          scheme: http
+
+volumes:
+  - name: cert
+    hostPathBase: *baseDir
+    hostPath: /source/cert
+    mountPath: /cert
+    type: Directory
+
+environment: {}
+
+resources: {}
+
+serviceAccount:
+  create: true
+  name: ""

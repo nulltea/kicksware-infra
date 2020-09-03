@@ -3,7 +3,6 @@ component: elasticsearch
 nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
-sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/tool-stack
 
 image:
   repository: docker.elastic.co/elasticsearch/elasticsearch
@@ -14,7 +13,6 @@ deployment:
   stateful: false
   serviceName: elasticsearch-
   replicaCount: 1
-  replicaSetName: rs0
 
 service:
   type: ClusterIP

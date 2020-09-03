@@ -56,10 +56,6 @@ spec:
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
             {{- end }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.port }}
           readinessProbe:
             httpGet:
               path: /

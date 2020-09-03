@@ -61,12 +61,6 @@ spec:
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
           {{- end }}
-          livenessProbe:
-            exec:
-              command:
-                - mongo
-                - --eval
-                - db.adminCommand('ping')
           readinessProbe:
             exec:
               command:

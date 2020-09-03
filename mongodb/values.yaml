@@ -3,7 +3,6 @@ component: mongodb
 nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
-sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/tool-stack
 
 image:
   repository: mongo
