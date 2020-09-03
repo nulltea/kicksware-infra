@@ -4,7 +4,7 @@ nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
 
-elasticsearchHost: http://ops.kicksware.com/elastic:443
+elasticsearchHost: http://search.kicksware.com:443
 
 image:
   repository: docker.elastic.co/kibana/kibana
@@ -27,10 +27,9 @@ ingress:
     enabled: true
     certResolver: le
   routes:
-    - host: ops.kicksware.com
+    - host: analitics.kicksware.com
       paths:
-        - /kibana
-        - /app/kibana
+        - /
       middlewares: []
       services:
         - name: kibana

@@ -28,6 +28,8 @@ spec:
             - name: ELASTICSEARCH_URL
               value: {{ .Values.elasticsearchHost }}
           volumeMounts:
+            - name: config
+              mountPath: /config
             {{- range .Values.volumes }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
@@ -39,6 +41,9 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
+        - name: config
+          configMap:
+            name: {{ template "chart.fullname" . }}.config
         {{- range .Values.volumes }}
         - name: {{ .name }}
           {{- if .hostPath }}
