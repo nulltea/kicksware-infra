@@ -5,7 +5,7 @@ kind: StatefulSet
 kind: Deployment
 {{- end }}
 metadata:
-  name: mongodb
+  name: {{ template "chart.fullname" . }}
   labels:
   {{- include "chart.labels" . | nindent 4 }}
 spec:
@@ -23,7 +23,7 @@ spec:
     matchLabels:
   {{- include "chart.selectorLabels" . | nindent 6 }}
   {{- if .Values.deployment.stateful}}
-  serviceName: mongodb-6c3816ec85f85dafe
+  serviceName: {{ .Values.deployment.serviceName }}
   {{- end }}
   template:
     metadata:

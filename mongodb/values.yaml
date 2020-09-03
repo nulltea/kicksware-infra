@@ -12,6 +12,7 @@ image:
 
 deployment:
   stateful: false
+  serviceName: mongodb-6c3816ec85f85dafe
   replicaCount: 1
   replicaSetName: rs0
 
@@ -38,9 +39,8 @@ ingress:
 storage:
   enabled: false
   hostPathBase: *baseDir
-  hostPath: /source/storage/backup
   storageClass: manual
-  size: 10Gi
+  size: 3Gi
   accessModes:
     - ReadWriteOnce
 
