@@ -1,0 +1,5 @@
+This is {{ .Values.component }} component of {{ .Values.project }} application project.
+For more info contact project maintainers:
+{{- range .Chart.Maintainers }}
+  - {{ .Name }}
+{{- end }}

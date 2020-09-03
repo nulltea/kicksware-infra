@@ -1,0 +1,43 @@
+project: kicksware
+component: filebeat
+nameOverride: ""
+fullnameOverride: ""
+baseDirL: &baseDir /run/desktop/mnt/host/wsl
+
+elasticsearchHost: http://search.kicksware.com:443
+kibanaHost: http://analitics.kicksware.com:443
+
+image:
+  repository: docker.elastic.co/beats/filebeat
+  tag: 7.9.0
+  pullPolicy: IfNotPresent
+
+deployment:
+  hostNetworking: false
+
+storage:
+  enabled: true
+  hostPathRoot: /var/lib
+
+volumes:
+  - name: cert
+    hostPathBase: *baseDir
+    hostPath: /source/cert
+    mountPath: /cert
+    type: Directory
+
+config:
+  filebeat.yml: |
+
+modules:
+  traefik:
+    accessLogPaths:
+      - /usr/local/traefik/access.log*
+
+environment: {}
+
+resources: {}
+
+serviceAccount:
+  create: true
+  name: ""
