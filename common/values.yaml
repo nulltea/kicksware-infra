@@ -1,0 +1,14 @@
+project: kicksware
+component: elasticsearch
+baseDirL: &baseDir /run/desktop/mnt/host/wsl
+sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/tool-stack
+
+
+storage:
+  enabled: false
+  hostPathBase: *baseDir
+  hostPath: /source/storage/db
+  storageClass: manual
+  size: 10Gi
+  accessModes:
+    - ReadWriteOnce
