@@ -38,15 +38,13 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
-            - name: http
+            - name: transport
               containerPort: {{ .Values.service.transportPort }}
           env:
             - name: xpack.monitoring.enabled
               value: "true"
             - name: xpack.watcher.enabled
               value: "false"
-            - name: ES_JAVA_OPTS
-              value: "Xms512m -Xmx512m"
             - name: discovery.type
               value: "single-node"
           volumeMounts:

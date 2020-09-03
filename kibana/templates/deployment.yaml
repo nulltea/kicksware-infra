@@ -25,7 +25,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
           env:
-            - name: ELASTICSEARCH_HOSTS
+            - name: ELASTICSEARCH_URL
               value: {{ .Values.elasticsearchHost }}
           volumeMounts:
             {{- range .Values.volumes }}
