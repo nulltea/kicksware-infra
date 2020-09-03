@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+  {{- if .Values.deployment.stateful}}
+kind: StatefulSet
+  {{- else }}
+kind: Deployment
+  {{- end }}
+metadata:
+  name: {{ template "chart.fullname" . }}
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  {{- end }}
+  {{- if .Values.deployment.stateful}}
+  updateStrategy:
+    type: RollingUpdate
+  {{- else }}
+  strategy:
+    type: RollingUpdate
+  {{- end }}
+  selector:
+    matchLabels:
+  {{- include "chart.selectorLabels" . | nindent 6 }}
+  {{- if .Values.deployment.stateful}}
+  serviceName: {{ .Values.deployment.serviceName }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+    {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "chart.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+            - name: http
+              containerPort: {{ .Values.service.transportPort }}
+          env:
+            - name: xpack.monitoring.enabled
+              value: "true"
+            - name: xpack.watcher.enabled
+              value: "false"
+            - name: ES_JAVA_OPTS
+              value: "Xms512m -Xmx512m"
+            - name: discovery.type
+              value: "single-node"
+          volumeMounts:
+            - name: data
+              mountPath: /usr/share/elasticsearch/data
+            {{- range .Values.volumes }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.port }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.port }}
+          resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      {{- if .Values.storage.enabled }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ template "chart.fullname" .}}.claim
+      {{- else }}
+        - name: data
+          emptyDir: {}
+      {{- end }}
+      {{- range .Values.volumes }}
+        - name: {{ .name }}
+        {{- if .hostPath }}
+          hostPath:
+            path: {{ .hostPathBase }}{{ .hostPath }}
+            type: {{ .type }}
+        {{- end }}
+      {{- end }}
+

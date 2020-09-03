@@ -1,24 +1,25 @@
 project: kicksware
-component: mongodb
+component: elasticsearch
 nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
 sourceDir: &sourceDir /run/desktop/mnt/host/wsl/source/repos/kicksware-platform/tool-stack
 
 image:
-  repository: mongo
-  tag: 3.6.19
+  repository: docker.elastic.co/elasticsearch/elasticsearch
+  tag: 7.9.0
   pullPolicy: IfNotPresent
 
 deployment:
   stateful: false
-  serviceName: mongodb-6c3816ec85f85dafe
+  serviceName: elasticsearch-
   replicaCount: 1
   replicaSetName: rs0
 
 service:
   type: ClusterIP
-  port: 27017
+  port: 9200
+  transportPort: 9300
 
 ingress:
   enabled: true
@@ -27,20 +28,22 @@ ingress:
     - websecure
   tls:
     enabled: true
-    secretName: mongo-tls
-    passthrough: false
+    certResolver: le
   routes:
-    - host: db.kicksware.com
-      protocol: tcp
+    - host: ops.kicksware.com
+      paths:
+        - /elastic
+      middlewares: []
       services:
-        - name: mongodb
-          port: 27017
+        - name: elasticsearch
+          port: 9200
+          scheme: http
 
 storage:
   enabled: false
   hostPathBase: *baseDir
   storageClass: manual
-  size: 3Gi
+  size: 2Gi
   accessModes:
     - ReadWriteOnce
 
@@ -52,12 +55,11 @@ volumes:
     type: Directory
   - name: backup
     hostPathBase: *baseDir
-    hostPath: /source/backup/mongo
+    hostPath: /source/backup/elastic
     mountPath: /backup
     type: Directory
 
-environment:
-  db: sneakerResaleDB
+environment: {}
 
 resources: {}
 

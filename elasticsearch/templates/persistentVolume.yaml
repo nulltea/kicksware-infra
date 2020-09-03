@@ -1,0 +1,17 @@
+{{- if .Values.storage.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "chart.fullname" . }}.claim
+spec:
+  storageClassName: {{ .Values.storage.storageClass }}
+  accessModes:
+    {{- range .Values.storage.accessModes }}
+    - {{ . }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.storage.size }}
+---
+  {{- end }}
