@@ -4,8 +4,11 @@ nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
 
-elasticsearchHost: http://search.kicksware.com:443
-kibanaHost: http://analitics.kicksware.com:443
+elasticsearch:
+  host: https://search.kicksware.com:443
+
+kibana:
+  host: https://analitics.kicksware.com:443
 
 image:
   repository: docker.elastic.co/beats/filebeat

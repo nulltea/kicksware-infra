@@ -16,10 +16,14 @@ spec:
         {{- include "chart.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "chart.serviceAccountName" . }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - filebeat
           args: ["-e", "-E", "http.enabled=true" ]
           env:
             - name: POD_NAMESPACE
@@ -32,7 +36,9 @@ spec:
                   fieldPath: spec.nodeName
           volumeMounts:
             - name: config
-              mountPath: /usr/share/filebeat
+              mountPath: /usr/share/filebeat/filebeat.yml
+              readOnly: true
+              subPath: filebeat.yml
             - name: modules
               mountPath: /usr/share/filebeat/modules.d
             - name: data
@@ -56,6 +62,9 @@ spec:
                   filebeat test output
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            runAsUser: 0
+            privileged: false
       volumes:
         - name: config
           configMap:
