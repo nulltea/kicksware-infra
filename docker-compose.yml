@@ -11,6 +11,10 @@ services:
     ports:
       - 27017:27017
       - 27018:27017
+    labels:
+      - traefik.tcp.routers.mongo.rule=HostSNI(`db.kicksware.com`)
+      - traefik.tcp.routers.mongo.tls=true
+      - traefik.docker.network=web
     networks:
       - web
       - data
@@ -31,9 +35,11 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
       - discovery.type=single-node
     labels:
-      - traefik.http.routers.elasticsearch.rule=Host(`ops.kicksware.com`) && PathPrefix(`/elastic`)
-      - traefik.http.routers.elasticsearch.tls=true
-      - traefik.http.routers.elasticsearch.tls.certresolver=le
+      - traefik.http.routers.elasticsearch-secure.rule=Host(`search.kicksware.com`) && PathPrefix(`/`)
+      - traefik.http.routers.elasticsearch-secure.tls=true
+      - traefik.http.routers.elasticsearch-secure.tls.certresolver=le
+      - traefik.http.routers.elasticsearch.rule=Host(`search.kicksware.com`) && PathPrefix(`/`)
+      - traefik.http.routers.elasticsearch.middlewares=https-redirect
       - traefik.docker.network=web
     networks:
       - web
@@ -47,11 +53,13 @@ services:
     depends_on:
       - elasticsearch
     environment:
-      - ELASTICSEARCH_URL=https://ops.kicksware.com/elastic
+      - ELASTICSEARCH_URL=https://search.kicksware.com/
     labels:
-      - traefik.http.routers.kibana.rule=Host(`ops.kicksware.com`) && PathPrefix(`/app/kibana`)
-      - traefik.http.routers.kibana.tls=true
-      - traefik.http.routers.kibana.tls.certresolver=le
+      - traefik.http.routers.kibana-secure.rule=Host(`analitics.kicksware.com`) && PathPrefix(`/`)
+      - traefik.http.routers.kibana-secure.tls=true
+      - traefik.http.routers.kibana-secure.tls.certresolver=le
+      - traefik.http.routers.kibana.rule=Host(`analitics.kicksware.com`) && PathPrefix(`/`)
+      - traefik.http.routers.kibana.middlewares=https-redirect
       - traefik.docker.network=web
     ports:
       - 5601:5601
