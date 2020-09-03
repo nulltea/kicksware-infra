@@ -28,9 +28,9 @@ ingress:
     enabled: true
     certResolver: le
   routes:
-    - host: ops.kicksware.com
+    - host: search.kicksware.com
       paths:
-        - /elastic
+        - /
       middlewares: []
       services:
         - name: elasticsearch
