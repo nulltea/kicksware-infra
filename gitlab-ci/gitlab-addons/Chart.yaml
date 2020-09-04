@@ -1,0 +1,11 @@
+apiVersion: v2
+name: gitlab-addons
+description: Gitlab CI additional componenets
+type: application
+version: 0.1.0
+appVersion: 1.0.0
+sources:
+  - https://gitlab.com/gitlab-org/charts/gitlab
+  - https://github.com/timoth-y/kicksware-tool-stack
+maintainers:
+  - name: Timothy Yalugin

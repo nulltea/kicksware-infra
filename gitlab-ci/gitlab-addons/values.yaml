@@ -1,0 +1,52 @@
+project: kicksware
+component: gitlab-ci
+nameOverride: ""
+fullnameOverride: ""
+deployment:
+  replicaCount: 1
+
+ingress:
+  enabled: true
+  entrypoints:
+    - web
+    - websecure
+  tls:
+    enabled: true
+    certResolver: le
+  routes:
+    - host: ci.kicksware.com
+      paths:
+        - /
+      middlewares: [ ]
+      services:
+        - name: gitlab-ci-webservice
+          port: 8181
+    - host: ci.adm.kicksware.com
+      paths:
+        - /
+      middlewares: [ ]
+      services:
+        - name: gitlab-ci-webservice
+          port: 8080
+    - host: registry.kicksware.com
+      paths:
+        - /
+      middlewares: [ ]
+      services:
+        - name: gitlab-ci-registry
+          port: 5000
+    - host: minio.kicksware.com
+      paths:
+        - /
+      middlewares: [ ]
+      services:
+        - name: gitlab-ci-minio-svc
+          port: 9000
+
+environment: {}
+
+resources: {}
+
+serviceAccount:
+  create: true
+  name: ""

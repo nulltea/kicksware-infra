@@ -1,0 +1,30 @@
+global:
+  edition: ce
+
+  hosts:
+    domain: ci.kicksware.com
+    gitlab:
+      name: ci.kicksware.com
+    registry:
+      name: registry.kicksware.com
+    minio:
+      name: minio.kicksware.com
+
+  ingress:
+    enabled: fasle
+    configureCertmanager: false
+
+ingress:
+  enabled: false
+nginx-ingress:
+  enabled: false
+
+certmanager:
+  install: false
+
+prometheus:
+  install: false
+
+certmanager-issuer:
+  email: timothy@kicksware.com
+

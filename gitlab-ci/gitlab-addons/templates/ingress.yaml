@@ -1,0 +1,53 @@
+{{- if .Values.ingress.enabled -}}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ template "chart.fullname" . }}{{- if .Values.ingress.tls.enabled }}.secure{{- end }}
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.ingress.entrypoints }}
+  entryPoints:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  routes:
+  {{- range .Values.ingress.routes }}
+    - match: Host(`{{ .host }}`) && PathPrefix(`{{ .paths | join "`) || PathPrefix(`" }}`)
+      kind: Rule
+      services:
+        {{- range .services }}
+        - name: {{ .name }}
+          port: {{ .port }}
+        {{- end }}
+  {{- end }}
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    certResolver: {{ .Values.ingress.tls.certResolver }}
+  {{- end }}
+---
+{{- if .Values.ingress.tls.enabled }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ template "chart.fullname" . }}
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    - web
+  routes:
+  {{- range .Values.ingress.routes }}
+    - match: Host(`{{ .host }}`) && PathPrefix(`{{ .paths | join "`) || PathPrefix(`" }}`)
+      kind: Rule
+      services:
+        {{- range .services }}
+        - name: {{ .name }}
+          port: {{ .port }}
+        {{- end }}
+      middlewares:
+        - name: https-redirect
+{{- end }}
+---
+{{- end }}
+{{- end }}
