@@ -1,6 +1,6 @@
 include: /compose/.gitlab-ci.yml
 
-image: lwolf/helm-kubectl-docker:v152_213
+image: alpine/helm:3.3.0 # lwolf/helm-kubectl-docker:v152_213
 
 stages:
   - deploy
@@ -23,7 +23,7 @@ deploy.mongodb:
 #    changes:
 #      - "*.md"
   script:
-    - helm init --client-only
+    #- helm init --client-only
     - helm upgrade --install mongodb mongodb/ -n gitlab
 
 deploy.elasticsearch:
