@@ -23,7 +23,7 @@ deploy.mongodb:
 #    changes:
 #      - "*.md"
   script:
-    - helm init
+    - helm init --client-only
     - helm upgrade --install mongodb mongodb/
 
 deploy.elasticsearch:
