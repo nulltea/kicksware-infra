@@ -14,8 +14,8 @@ deploy.mongodb:
     - k8s
     - tool-stack
   only:
-    changes:
-      - mongodb/**/*
+    #changes:
+    #  - mongodb/**/*
     kubernetes: active
   except:
     changes:
@@ -29,8 +29,8 @@ deploy.elasticsearch:
     - k8s
     - tool-stack
   only:
-    changes:
-      - elasticsearch/**/*
+    # changes:
+    #  - elasticsearch/**/*
     kubernetes: active
   except:
     changes:
@@ -44,8 +44,8 @@ deploy-kibana-step:
     - k8s
     - tool-stack
   only:
-    changes:
-      - kibana/**/*
+    #changes:
+    #  - kibana/**/*
     kubernetes: active
   except:
     changes:
@@ -59,8 +59,8 @@ deploy.filebeat:
     - k8s
     - tool-stack
   only:
-    changes:
-      - filebeat/**/*
+    #changes:
+    #  - filebeat/**/*
     kubernetes: active
   except:
     changes:
