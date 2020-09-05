@@ -24,7 +24,7 @@ deploy.mongodb:
 #      - "*.md"
   script:
     - helm init --client-only
-    - helm upgrade --install mongodb mongodb/
+    - helm upgrade --install mongodb mongodb/ -n gitlab
 
 deploy.elasticsearch:
   stage: deploy
