@@ -1,6 +1,6 @@
 include: /compose/.gitlab-ci.yml
 
-image: alpine/helm:3.3.0 # lwolf/helm-kubectl-docker:v152_213
+image: alpine/helm:3.3.0
 
 stages:
   - deploy
@@ -15,61 +15,60 @@ deploy.mongodb:
   tags:
     - k8s
     - tool-stack
-#  only:
-#    changes:
-#      - mongodb/**/*
-#    kubernetes: active
-#  except:
-#    changes:
-#      - "*.md"
+  only:
+    changes:
+      - mongodb/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
   script:
-    #- helm init --client-only
-    - helm upgrade --install mongodb mongodb/ -n gitlab
+    -  helm upgrade --install -n toolstack -n tool-stack mongodb mongodb/
 
 deploy.elasticsearch:
   stage: deploy
   tags:
     - k8s
     - tool-stack
-#  only:
-#    changes:
-#      - elasticsearch/**/*
-#    kubernetes: active
-#  except:
-#    changes:
-#      - "*.md"
+  only:
+    changes:
+      - elasticsearch/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
   script:
-    -  helm upgrade --install elasticsearch elasticsearch/
+    -  helm upgrade --install -n toolstack elasticsearch elasticsearch/
 
 deploy-kibana-step:
   stage: deploy
   tags:
     - k8s
     - tool-stack
-#  only:
-#    changes:
-#      - kibana/**/*
-#    kubernetes: active
-#  except:
-#    changes:
-#      - "*.md"
+  only:
+    changes:
+      - kibana/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
   script:
-    -  helm upgrade --install kibana kibana/
+    -  helm upgrade --install -n toolstack kibana kibana/
 
 deploy.filebeat:
   stage: deploy
   tags:
     - k8s
     - tool-stack
-#  only:
-#    changes:
-#      - filebeat/**/*
-#    kubernetes: active
-#  except:
-#    changes:
-#      - "*.md"
+  only:
+    changes:
+      - filebeat/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
   script:
-    -  helm upgrade --install filebeat filebeat/
+    -  helm upgrade --install -n toolstack filebeat filebeat/
 
 deploy.gitlab-ci:
   stage: deploy
@@ -86,7 +85,7 @@ deploy.gitlab-ci:
   script:
     - helm repo add gitlab https://charts.gitlab.io/
     - helm repo update
-    - helm upgrade --install gitlab-ci gitlab/gitlab -f=gitlab-ci/gitlab-ce/values.yaml
+    - helm upgrade --install -n gitlab gitlab-ci gitlab/gitlab -f=gitlab-ci/gitlab-ce/values.yaml
 
 deploy.gitlab-runner:
   stage: deploy
@@ -103,19 +102,19 @@ deploy.gitlab-runner:
   script:
     - helm repo add gitlab https://charts.gitlab.io
     - helm repo update
-    - helm upgrade --install gitlab-ci gitlab/gitlab-runner -f=gitlab-runner/gitlab-ce/values.yaml
+    - helm upgrade --install -n gitlab gitlab-ci gitlab/gitlab-runner -f=gitlab-runner/gitlab-ce/values.yaml
 
 deploy.gitlab-addons:
   stage: deploy
   tags:
     - k8s
     - tool-stack
-#  only:
-#    changes:
-#      - gitlab-ci/gitlab-addons/**/*
-#    kubernetes: active
-#  except:
-#    changes:
-#      - "*.md"
+  only:
+    changes:
+      - gitlab-ci/gitlab-addons/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
   script:
-    - helm upgrade --install gitlab-ci-addons gitlab-ci/gitlab-addons/
+    - helm upgrade --install -n gitlab gitlab-ci-addons gitlab-ci/gitlab-addons/

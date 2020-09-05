@@ -18,7 +18,7 @@ ingress:
     - host: ci.kicksware.com
       paths:
         - /
-      middlewares: [ ]
+      middlewares: []
       services:
         - name: gitlab-ci-webservice
           port: 8181

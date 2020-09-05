@@ -11,7 +11,7 @@ global:
       name: minio.kicksware.com
 
   ingress:
-    enabled: fasle
+    enabled: false
     configureCertmanager: false
 
 ingress:
@@ -22,17 +22,9 @@ nginx-ingress:
 certmanager:
   install: false
 
-prometheus:
-  install: false
 
 certmanager-issuer:
   email: timothy@kicksware.com
 
 gitlab-runner:
   install: false
-
-gitlab:
-  sidekiq:
-    enabled: false
-  migrations:
-    enabled: false

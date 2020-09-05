@@ -34,7 +34,7 @@ volumes:
       path: /var/run/docker.sock
     mountPath: /var/run/docker.sock
     readOnly: true
-  - name: source
+  - name: data
     persistent:
       claim: filebeat.data-claim
       storageClass: nfs

@@ -35,7 +35,7 @@ ingress:
           port: 27017
 
 volumes:
-  - name: source
+  - name: data
     persistent:
       claim: mongodb.data-claim
       storageClass: nfs
@@ -43,7 +43,7 @@ volumes:
       accessModes:
         - ReadWriteOnce
     mountPath: /data/db
-  - name: source
+  - name: backup
     persistent:
       claim: mongodb.backup-claim
       storageClass: nfs

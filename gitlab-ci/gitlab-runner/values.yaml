@@ -1,14 +1,13 @@
 gitlabUrl: https://ci.kicksware.com/
 
-runnerRegistrationToken: GJHHQNn9kioqq4_8b253
+runnerRegistrationToken: OPZ02SzHvzgkzir055Z7Q6nuN1vyyKCe9RZ1BP4n8FtoIt4V98vLH0EOac5ZWulz
 
 concurrent: 10
 
 checkInterval: 30
 
 rbac:
-  create: true
-  clusterWideAccess: true
+  create: false
 
 runners:
   image: ubuntu:18.04
