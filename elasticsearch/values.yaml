@@ -47,7 +47,7 @@ volumes:
     mountPath: /usr/share/elasticsearch/data
   - name: backup
     persistent:
-      claim: elasticsearch.data-claim
+      claim: elasticsearch.backup-claim
       storageClass: nfs
       size: 1Gi
       accessModes:
