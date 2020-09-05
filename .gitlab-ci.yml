@@ -13,13 +13,13 @@ deploy.mongodb:
   tags:
     - k8s
     - tool-stack
-  only:
-    #changes:
-    #  - mongodb/**/*
-    kubernetes: active
-  except:
-    changes:
-      - "*.md"
+#  only:
+#    changes:
+#      - mongodb/**/*
+#    kubernetes: active
+#  except:
+#    changes:
+#      - "*.md"
   script:
     -  helm upgrade --install mongodb mongodb/
 
@@ -28,13 +28,13 @@ deploy.elasticsearch:
   tags:
     - k8s
     - tool-stack
-  only:
-    # changes:
-    #  - elasticsearch/**/*
-    kubernetes: active
-  except:
-    changes:
-      - "*.md"
+#  only:
+#    changes:
+#      - elasticsearch/**/*
+#    kubernetes: active
+#  except:
+#    changes:
+#      - "*.md"
   script:
     -  helm upgrade --install elasticsearch elasticsearch/
 
@@ -43,13 +43,13 @@ deploy-kibana-step:
   tags:
     - k8s
     - tool-stack
-  only:
-    #changes:
-    #  - kibana/**/*
-    kubernetes: active
-  except:
-    changes:
-      - "*.md"
+#  only:
+#    changes:
+#      - kibana/**/*
+#    kubernetes: active
+#  except:
+#    changes:
+#      - "*.md"
   script:
     -  helm upgrade --install kibana kibana/
 
@@ -58,13 +58,13 @@ deploy.filebeat:
   tags:
     - k8s
     - tool-stack
-  only:
-    #changes:
-    #  - filebeat/**/*
-    kubernetes: active
-  except:
-    changes:
-      - "*.md"
+#  only:
+#    changes:
+#      - filebeat/**/*
+#    kubernetes: active
+#  except:
+#    changes:
+#      - "*.md"
   script:
     -  helm upgrade --install filebeat filebeat/
 
@@ -107,12 +107,12 @@ deploy.gitlab-addons:
   tags:
     - k8s
     - tool-stack
-  only:
-    changes:
-      - gitlab-ci/gitlab-addons/**/*
-    kubernetes: active
-  except:
-    changes:
-      - "*.md"
+#  only:
+#    changes:
+#      - gitlab-ci/gitlab-addons/**/*
+#    kubernetes: active
+#  except:
+#    changes:
+#      - "*.md"
   script:
     - helm upgrade --install gitlab-ci-addons gitlab-ci/gitlab-addons/
