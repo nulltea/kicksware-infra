@@ -14,6 +14,7 @@ ingress:
     enabled: true
     certResolver: le
   routes:
+    # Gitlab CI web app
     - host: ci.kicksware.com
       paths:
         - /
@@ -21,6 +22,8 @@ ingress:
       services:
         - name: gitlab-ci-webservice
           port: 8181
+          scheme: http
+    # Gitlab CI Sidekiq web app
     - host: ci.adm.kicksware.com
       paths:
         - /
@@ -28,6 +31,11 @@ ingress:
       services:
         - name: gitlab-ci-webservice
           port: 8080
+          scheme: http
+        - name: gitlab-ci-webservice
+          port: 8181
+          scheme: http
+    # Gitlab CI registry service
     - host: registry.kicksware.com
       paths:
         - /
@@ -35,6 +43,8 @@ ingress:
       services:
         - name: gitlab-ci-registry
           port: 5000
+          scheme: http
+    # Gitlab CI minio service
     - host: minio.kicksware.com
       paths:
         - /
@@ -42,6 +52,7 @@ ingress:
       services:
         - name: gitlab-ci-minio-svc
           port: 9000
+          scheme: http
 
 environment: {}
 

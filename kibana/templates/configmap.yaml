@@ -4,11 +4,12 @@ kind: ConfigMap
 metadata:
   name: {{ template "chart.fullname" . }}.config
   labels:
-  {{- include "chart.labels" . | nindent 4 }}
+    {{- include "chart.labels" . | nindent 4 }}
 data:
   kibana.yml: |
     server.name: kibana
     server.host: 0.0.0.0
-    elasticsearch.url: http://search.kicksware.com:443
-    elasticsearch.hosts: [ http://search.kicksware.com:443 ]
+    elasticsearch.url: {{ .Values.elasticsearchHost }}
+    elasticsearch.hosts: [ {{ .Values.elasticsearchHost }} ]
     monitoring.ui.container.elasticsearch.enabled: truebash-4.2$
+---

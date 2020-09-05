@@ -1,0 +1,20 @@
+stages:
+    - deploy
+
+deploy.tool-stack:
+  image:
+    name: docker/compose:1.25.0
+  services:
+    - docker:stable-dind
+  stage: deploy
+  tags:
+    - tool-stack
+  before_script:
+    - apk add make
+    - make mongo-backup
+  except:
+    kubernetes: active
+  script:
+    - make stack
+  after_script:
+    - make mongo-restore

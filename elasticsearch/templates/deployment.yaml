@@ -48,8 +48,6 @@ spec:
             - name: discovery.type
               value: "single-node"
           volumeMounts:
-            - name: data
-              mountPath: /usr/share/elasticsearch/data
             {{- range .Values.volumes }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
@@ -61,20 +59,15 @@ spec:
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-      {{- if .Values.storage.enabled }}
-        - name: data
-          persistentVolumeClaim:
-            claimName: {{ template "chart.fullname" .}}.claim
-      {{- else }}
-        - name: data
-          emptyDir: {}
-      {{- end }}
-      {{- range .Values.volumes }}
+        {{- range .Values.volumes }}
         - name: {{ .name }}
-        {{- if .hostPath }}
+          {{- with .host }}
           hostPath:
-            path: {{ .hostPathBase }}{{ .hostPath }}
+            path: {{ .pathBase }}{{ .path }}
             type: {{ .type }}
+          {{- end }}
+          {{- with .persistent }}
+          persistentVolumeClaim:
+            claimName: {{ .claim }}
+          {{- end }}
         {{- end }}
-      {{- end }}
-

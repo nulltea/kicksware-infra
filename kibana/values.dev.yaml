@@ -36,7 +36,12 @@ ingress:
           port: 5601
           scheme: http
 
-volumes: {}
+volumes:
+  - name: cert
+    hostPathBase: *baseDir
+    hostPath: /source/cert
+    mountPath: /cert
+    type: Directory
 
 environment: {}
 

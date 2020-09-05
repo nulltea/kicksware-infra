@@ -5,14 +5,12 @@ kind: IngressRoute
 metadata:
   name: {{ template "chart.fullname" . }}{{- if .Values.ingress.tls.enabled }}.secure{{- end }}
   labels:
-  {{- include "chart.labels" . | nindent 4 }}
+    {{- include "chart.labels" . | nindent 4 }}
 spec:
-  {{- with .Values.ingress.entrypoints }}
   entryPoints:
-  {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- range .Values.ingress.routes }}
+    {{- toYaml .Values.ingress.entrypoints | nindent 4 }}
   routes:
+    {{- range .Values.ingress.routes }}
     - match: Host(`{{ .host }}`) && PathPrefix(`{{ .paths | join "`) || PathPrefix(`" }}`)
       kind: Rule
       services:
@@ -20,8 +18,10 @@ spec:
         - name: {{ .name }}
           port: {{ .port }}
           scheme: {{ .scheme }}
-  {{- end }}
-  {{- end }}
+        {{- end }}
+      middlewares:
+        {{- toYaml .middlewares | nindent 8}}
+    {{- end }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
     certResolver: {{ .Values.ingress.tls.certResolver }}
@@ -33,12 +33,12 @@ kind: IngressRoute
 metadata:
   name: {{ template "chart.fullname" . }}
   labels:
-  {{- include "chart.labels" . | nindent 4 }}
+    {{- include "chart.labels" . | nindent 4 }}
 spec:
   entryPoints:
     - web
-  {{- range .Values.ingress.routes }}
   routes:
+    {{- range .Values.ingress.routes }}
     - match: Host(`{{ .host }}`) && PathPrefix(`{{ .paths | join "`) || PathPrefix(`" }}`)
       kind: Rule
       services:
@@ -49,7 +49,8 @@ spec:
         {{- end }}
       middlewares:
         - name: https-redirect
-  {{- end }}
+        {{- toYaml .middlewares | nindent 8}}
+    {{- end }}
 ---
   {{- end }}
-  {{- end }}
+{{- end }}

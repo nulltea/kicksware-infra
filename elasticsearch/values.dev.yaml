@@ -2,6 +2,7 @@ project: kicksware
 component: elasticsearch
 nameOverride: ""
 fullnameOverride: ""
+baseDirL: &baseDir /run/desktop/mnt/host/wsl
 
 image:
   repository: docker.elastic.co/elasticsearch/elasticsearch
@@ -38,21 +39,18 @@ ingress:
 
 volumes:
   - name: cert
-    persistent:
-      claim: elasticsearch.data-claim
-      storageClass: nfs
-      size: 3Gi
-      accessModes:
-        - ReadWriteOnce
-    mountPath: /usr/share/elasticsearch/data
+    host:
+      pathBase: *baseDir
+      path: /source/cert
+      type: Directory
+    mountPath: /cert
   - name: backup
-    persistent:
-      claim: elasticsearch.data-claim
-      storageClass: nfs
-      size: 1Gi
-      accessModes:
-        - ReadWriteOnce
-    mountPath: /source/backup
+    host:
+      pathBase: *baseDir
+      path: /source/backup/elastic
+      type: Directory
+    mountPath: /backup
+
 
 environment: {}
 

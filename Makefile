@@ -8,4 +8,3 @@ mongo-backup:
 
 mongo-restore:
 	docker exec mongo mongorestore -u $(MONGO_USER) -p $(MONGO_PASSWORD) --authenticationDatabase admin ./backup;
-

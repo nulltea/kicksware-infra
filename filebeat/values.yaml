@@ -2,13 +2,12 @@ project: kicksware
 component: filebeat
 nameOverride: ""
 fullnameOverride: ""
-baseDirL: &baseDir /run/desktop/mnt/host/wsl
 
 elasticsearch:
-  host: https://search.kicksware.com:443
+  host: https://search.kicksware.com
 
 kibana:
-  host: https://analitics.kicksware.com:443
+  host: https://analitics.kicksware.com
 
 image:
   repository: docker.elastic.co/beats/filebeat
@@ -18,19 +17,31 @@ image:
 deployment:
   hostNetworking: false
 
-storage:
-  enabled: true
-  hostPathRoot: /var/lib
-
 volumes:
-  - name: cert
-    hostPathBase: *baseDir
-    hostPath: /source/cert
-    mountPath: /cert
+  - name: varlibdockercontainers
+    host:
+      path: /var/lib/docker/containers
+    mountPath: /var/lib/docker/containers
     type: Directory
-
-config:
-  filebeat.yml: |
+    readOnly: true
+  - name: varlog
+    host:
+      path: /var/log
+    mountPath: /var/log
+    readOnly: true
+  - name: varrundockersock
+    host:
+      path: /var/run/docker.sock
+    mountPath: /var/run/docker.sock
+    readOnly: true
+  - name: source
+    persistent:
+      claim: filebeat.data-claim
+      storageClass: nfs
+      size: 1Gi
+      accessModes:
+        - ReadWriteOnce
+    mountPath: /usr/share/filebeat/data
 
 modules:
   traefik:

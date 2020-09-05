@@ -2,6 +2,7 @@ project: kicksware
 component: mongodb
 nameOverride: ""
 fullnameOverride: ""
+baseDirL: &baseDir /run/desktop/mnt/host/wsl
 
 image:
   repository: mongo
@@ -35,22 +36,18 @@ ingress:
           port: 27017
 
 volumes:
-  - name: source
-    persistent:
-      claim: mongodb.data-claim
-      storageClass: nfs
-      size: 2Gi
-      accessModes:
-        - ReadWriteOnce
-    mountPath: /data/db
-  - name: source
-    persistent:
-      claim: mongodb.backup-claim
-      storageClass: nfs
-      size: 1Gi
-      accessModes:
-        - ReadWriteOnce
-    mountPath: /source/backup
+  - name: cert
+    host:
+      pathBase: *baseDir
+      path: /source/cert
+      type: Directory
+    mountPath: /cert
+  - name: backup
+    host:
+      pathBase: *baseDir
+      path: /source/backup/mongo
+      type: Directory
+    mountPath: /backup
 
 environment:
   db: sneakerResaleDB

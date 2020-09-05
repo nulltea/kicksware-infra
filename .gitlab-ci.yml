@@ -1,49 +1,118 @@
-image:
-    name: docker/compose:1.25.0
-    entrypoint: [""]
-
-services:
-    - docker:stable-dind
+include: /compose/.gitlab-ci.yml
 
 stages:
-    - init
-    - build
-    - test
-    - deploy
+  - deploy
 
-before_script: &common-before
-    - docker version
-    - docker-compose version
-    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
-    - export SOURCE_DIR="/source/repos/$CI_PROJECT_NAME"
-    - apk add make
+variables:
+  SOURCE_DIR: /source/repos/$CI_PROJECT_NAME
 
+# deploy stage steps:
 
-#---build stage---#
+deploy.mongodb:
+  stage: deploy
+  tags:
+    - k8s
+    - tool-stack
+  only:
+    changes:
+      - mongodb/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
+  script:
+    -  helm upgrade --install mongodb mongodb/
 
+deploy.elasticsearch:
+  stage: deploy
+  tags:
+    - k8s
+    - tool-stack
+  only:
+    changes:
+      - elasticsearch/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
+  script:
+    -  helm upgrade --install elasticsearch elasticsearch/
 
-#----------------#
+deploy-kibana-step:
+  stage: deploy
+  tags:
+    - k8s
+    - tool-stack
+  only:
+    changes:
+      - kibana/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
+  script:
+    -  helm upgrade --install kibana kibana/
 
-#---test stage---#
+deploy.filebeat:
+  stage: deploy
+  tags:
+    - k8s
+    - tool-stack
+  only:
+    changes:
+      - filebeat/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
+  script:
+    -  helm upgrade --install filebeat filebeat/
 
-#----------------#
+deploy.gitlab-ci:
+  stage: deploy
+  tags:
+    - k8s
+    - tool-stack
+  only:
+    changes:
+      - gitlab-ci/gitlab-ce/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
+  script:
+    - helm repo add gitlab https://charts.gitlab.io/
+    - helm repo update
+    - helm upgrade --install gitlab-ci gitlab/gitlab -f=gitlab-ci/gitlab-ce/values.yaml
 
-#---deploy stage---#
+deploy.gitlab-runner:
+  stage: deploy
+  tags:
+    - k8s
+    - tool-stack
+  only:
+    changes:
+      - gitlab-ci/gitlab-runner/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
+  script:
+    - helm repo add gitlab https://charts.gitlab.io
+    - helm repo update
+    - helm upgrade --install gitlab-ci gitlab/gitlab-runner -f=gitlab-runner/gitlab-ce/values.yaml
 
-
-deploy-stack-step:
-    stage: deploy
-    before_script:
-      - *common-before
-      - export DYNAMIC_ENV_VAR=PROD
-      - make mongo-backup
-    tags:
-      - middleware
-      - deploy
-    script:
-      - echo setting up env $DYNAMIC_ENV_VAR
-      - make stack
-    after_script:
-      - make mongo-restore
-
-#----------------#
+deploy.gitlab-addons:
+  stage: deploy
+  tags:
+    - k8s
+    - tool-stack
+  only:
+    changes:
+      - gitlab-ci/gitlab-addons/**/*
+    kubernetes: active
+  except:
+    changes:
+      - "*.md"
+  script:
+    - helm upgrade --install gitlab-ci-addons gitlab-ci/gitlab-addons/

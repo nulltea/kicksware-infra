@@ -28,3 +28,11 @@ prometheus:
 certmanager-issuer:
   email: timothy@kicksware.com
 
+gitlab-runner:
+  install: false
+
+gitlab:
+  sidekiq:
+    enabled: false
+  migrations:
+    enabled: false

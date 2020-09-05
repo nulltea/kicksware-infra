@@ -41,15 +41,19 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
+          {{- with .host }}
+          hostPath:
+            path: {{ .pathBase }}{{ .path }}
+            type: {{ .type }}
+          {{- end }}
+          {{- with .persistent }}
+          persistentVolumeClaim:
+            claimName: {{ .claim }}
+          {{- end }}
+        {{- end }}
         - name: config
           configMap:
             name: {{ template "chart.fullname" . }}.config
-        {{- range .Values.volumes }}
-        - name: {{ .name }}
-          {{- if .hostPath }}
-          hostPath:
-            path: {{ .hostPathBase }}{{ .hostPath }}
-            type: {{ .type }}
-          {{- end }}
-        {{- end }}
 

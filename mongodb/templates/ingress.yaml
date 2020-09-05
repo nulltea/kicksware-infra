@@ -7,23 +7,21 @@ metadata:
   labels:
   {{- include "chart.labels" . | nindent 4 }}
 spec:
-  {{- with .Values.ingress.entrypoints }}
   entryPoints:
-  {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- range .Values.ingress.routes }}
+    {{- toYaml .Values.ingress.entrypoints | nindent 4 }}
   routes:
+  {{- range .Values.ingress.routes }}
     - match: HostSNI(`{{ .host }}`)
       kind: Rule
       services:
         {{- range .services }}
         - name: {{ .name }}
           port: {{ .port }}
-  {{- end }}
+        {{- end }}
   {{- end }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
     passthrough: {{ .Values.ingress.tls.passthrough }}
     secretName: {{ .Values.ingress.tls.secretName }}
   {{- end }}
-  {{- end }}
+{{- end }}
