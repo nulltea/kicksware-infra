@@ -23,7 +23,7 @@ deploy.mongodb:
     changes:
       - "*.md"
   script:
-    -  helm upgrade --install -n toolstack -n tool-stack mongodb mongodb/
+    -  helm upgrade --install -n toolstack mongodb mongodb/
 
 deploy.elasticsearch:
   stage: deploy

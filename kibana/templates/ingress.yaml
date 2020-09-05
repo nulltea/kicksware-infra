@@ -19,8 +19,10 @@ spec:
           port: {{ .port }}
           scheme: {{ .scheme }}
         {{- end }}
+      {{- with .middlewares }}
       middlewares:
-        {{- toYaml .middlewares | nindent 8}}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     {{- end }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
@@ -49,7 +51,9 @@ spec:
         {{- end }}
       middlewares:
         - name: https-redirect
-        {{- toYaml .middlewares | nindent 8}}
+      {{- with .middlewares }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     {{- end }}
 ---
   {{- end }}
