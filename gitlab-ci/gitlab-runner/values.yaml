@@ -1,15 +1,21 @@
-gitlabUrl: https://ci.kicksware.com
+gitlabUrl: https://ci.kicksware.com/
 
-runnerRegistrationToken: QvjcrP5GeKWzFCszN1HE
+runnerRegistrationToken: GJHHQNn9kioqq4_8b253
 
 concurrent: 10
 
 checkInterval: 30
 
 rbac:
-  create: false
-  clusterWideAccess: false
+  create: true
+  clusterWideAccess: true
 
 runners:
   image: ubuntu:18.04
   privileged: true
+  locked: false
+  tags: "k8s, api, web-app, gateway, tool-stack"
+
+metrics:
+  enabled: false
+

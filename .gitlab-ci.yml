@@ -1,5 +1,7 @@
 include: /compose/.gitlab-ci.yml
 
+image: alpine/helm:3.3.0
+
 stages:
   - deploy
 
