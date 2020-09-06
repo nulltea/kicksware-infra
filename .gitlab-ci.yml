@@ -72,7 +72,7 @@ deploy-elasticstack-step:
   script:
     - helm repo add elastic https://helm.elastic.co
     - helm repo update
-    - helm upgrade --install logstach elastic/logstach -f=elasticstack/logstash.yaml
+    - helm upgrade --install logstash elastic/logstash -f=elasticstack/logstash.yaml
     - helm upgrade --install filebeat elastic/filebeat -f=elasticstack/filebeat.yaml
     - helm upgrade --install metricbeat elastic/metricbeat -f=elasticstack/metricbeat.yaml
     # - helm upgrade --install apm-server elastic/apm-server -f=elasticstack/apm-server.yaml
