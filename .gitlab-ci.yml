@@ -104,7 +104,7 @@ deploy.gitlab-runner:
   script:
     - helm repo add gitlab https://charts.gitlab.io
     - helm repo update
-    - helm upgrade --install -n gitlab gitlab-ci gitlab/gitlab-runner -f=gitlab-runner/gitlab-ce/values.yaml
+    - helm upgrade --install -n gitlab gitlab-ci gitlab/gitlab-runner -f=gitlab-ci/gitlab-runner/values.yaml
 
 deploy.gitlab-addons:
   stage: deploy
