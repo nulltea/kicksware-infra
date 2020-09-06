@@ -4,10 +4,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 elasticsearch:
-  host: https://search.kicksware.com
+  host: https://search.kicksware.com:443
 
 kibana:
-  host: https://analitics.kicksware.com
+  host: https://analitics.kicksware.com:443
 
 image:
   repository: docker.elastic.co/beats/filebeat
@@ -22,7 +22,6 @@ volumes:
     host:
       path: /var/lib/docker/containers
     mountPath: /var/lib/docker/containers
-    type: Directory
     readOnly: true
   - name: varlog
     host:
@@ -35,12 +34,9 @@ volumes:
     mountPath: /var/run/docker.sock
     readOnly: true
   - name: data
-    persistent:
-      claim: filebeat.data-claim
-      storageClass: nfs
-      size: 1Gi
-      accessModes:
-        - ReadWriteOnce
+    host:
+      path: /var/lib/filebeat-gitlab-data
+      type: DirectoryOrCreate
     mountPath: /usr/share/filebeat/data
 
 modules:

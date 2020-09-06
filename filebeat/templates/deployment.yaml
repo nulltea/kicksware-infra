@@ -70,8 +70,10 @@ spec:
         - name: {{ .name }}
           {{- with .host }}
           hostPath:
-            path: {{ .pathBase }}{{ .path }}
+            path: {{ .path }}
+            {{- if .type}}
             type: {{ .type }}
+            {{- end }}
           {{- end }}
           {{- with .persistent }}
           persistentVolumeClaim:
