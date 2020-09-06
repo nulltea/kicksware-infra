@@ -18,6 +18,9 @@ spec:
   {{- else }}
   strategy:
     type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   {{- end }}
   selector:
     matchLabels:
@@ -67,19 +70,15 @@ spec:
                 - db.adminCommand('ping')
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.backup.enabled }}
           lifecycle:
             postStart:
               exec:
-                command:
-                 - sh
-                 - -c
-                 - mongorestore -u=${MONGO_USER} -p=${MONGO_PASSWORD} /backup
+                command: ["/bin/bash", "-c", "sleep 15s; mongorestore -u=${MONGO_USER} -p=${MONGO_PASSWORD} /source/backup"]
             preStop:
               exec:
-                command:
-                  - sh
-                  - -c
-                  - mongodump --db={MONGO_DB} -u=${MONGO_USER} -p=${MONGO_PASSWORD} --out=/backup
+                command: ["/bin/bash", "-c", "mongodump --db=${MONGO_DB} -u=${MONGO_USER} -p=${MONGO_PASSWORD} --out=/source/backup"]
+          {{- end }}
       volumes:
         {{- range .Values.volumes }}
         - name: {{ .name }}

@@ -23,8 +23,7 @@ deploy.mongodb:
     changes:
       - "*.md"
   before_script:
-    - kubectl create secret generic mongo-auth -n=toolstack --dry-run
-      --from-literal=MONGO_USER=$MONGO_USER --from-literal=MONGO_PASSWORD=$MONGO_PASSWORD -o yaml | kubectl apply -f -
+    - kubectl create secret generic mongo-auth -n=toolstack --dry-run --from-literal=MONGO_USER=${MONGO_USER} --from-literal=MONGO_PASSWORD=${MONGO_PASSWORD} -o yaml | kubectl apply -f -
   script:
     -  helm upgrade --install -n toolstack mongodb mongodb/
 

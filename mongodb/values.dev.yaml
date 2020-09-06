@@ -52,6 +52,9 @@ volumes:
 environment:
   db: sneakerResaleDB
 
+backup:
+  enabled: true
+
 resources: {}
 
 autoscaling:

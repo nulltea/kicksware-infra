@@ -9,7 +9,7 @@ image:
   pullPolicy: IfNotPresent
 
 deployment:
-  stateful: false
+  stateful: true
   serviceName: mongodb-6c3816ec85f85dafe
   replicaCount: 1
   replicaSetName: rs0
@@ -54,6 +54,9 @@ volumes:
 
 environment:
   db: sneakerResaleDB
+
+backup:
+  enabled: true
 
 resources: {}
 
