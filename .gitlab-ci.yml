@@ -25,7 +25,7 @@ deploy.mongodb:
   before_script:
     - kubectl create secret generic mongo-auth -n=toolstack --dry-run --from-literal=MONGO_USER=${MONGO_USER} --from-literal=MONGO_PASSWORD=${MONGO_PASSWORD} -o yaml | kubectl apply -f -
   script:
-    -  helm upgrade --install -n toolstack mongodb mongodb/
+    - helm upgrade --install -n toolstack mongodb mongodb/
 
 deploy.elasticsearch:
   stage: deploy
@@ -40,7 +40,7 @@ deploy.elasticsearch:
     changes:
       - "*.md"
   script:
-    -  helm upgrade --install -n toolstack elasticsearch elasticsearch/
+    - helm upgrade --install -n toolstack elasticsearch elasticsearch/
 
 deploy-kibana-step:
   stage: deploy
@@ -55,22 +55,27 @@ deploy-kibana-step:
     changes:
       - "*.md"
   script:
-    -  helm upgrade --install -n toolstack kibana kibana/
+    - helm upgrade --install -n toolstack kibana kibana/
 
-deploy.filebeat:
+deploy-elasticstack-step:
   stage: deploy
   tags:
     - k8s
     - tool-stack
   only:
     changes:
-      - filebeat/**/*
+      - elasticbeats/**/*
     kubernetes: active
   except:
     changes:
       - "*.md"
   script:
-    -  helm upgrade --install -n toolstack filebeat filebeat/
+    - helm repo add elastic https://helm.elastic.co
+    - helm repo update
+    - helm upgrade --install logstach elastic/logstach -f=elasticstack/logstash.yaml
+    - helm upgrade --install filebeat elastic/filebeat -f=elasticstack/filebeat.yaml
+    - helm upgrade --install metricbeat elastic/metricbeat -f=elasticstack/metricbeat.yaml
+    # - helm upgrade --install apm-server elastic/apm-server -f=elasticstack/apm-server.yaml
 
 deploy.gitlab-ci:
   stage: deploy

@@ -1,0 +1,18 @@
+daemonset:
+  enabled: false
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "50Mi"
+    limits:
+      cpu: "250m"
+      memory: "100Mi"
+
+deployment:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "50Mi"
+    limits:
+      cpu: "250m"
+      memory: "100Mi"

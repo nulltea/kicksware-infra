@@ -48,7 +48,7 @@ spec:
             - name: network.host
               value: 0.0.0.0
             - name: discovery.seed_hosts
-              value: {{ template "chart.fullname" .}},{{ template "chart.fullname" .}}-headless,search.kicksware.com
+              value: {{ template "chart.fullname" .}},{{ template "chart.fullname" .}}-master,search.kicksware.com
             - name: cluster.initial_master_nodes
               value: {{ template "elasticsearch.endpoints" . }}
             - name: ES_JAVA_OPTS

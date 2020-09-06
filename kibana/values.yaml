@@ -40,7 +40,13 @@ volumes: {}
 
 environment: {}
 
-resources: {}
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "500m"
+    memory: "1Gi"
 
 serviceAccount:
   create: true

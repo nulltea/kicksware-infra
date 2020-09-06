@@ -18,16 +18,14 @@ spec:
   selector:
   {{- include "chart.selectorLabels" . | nindent 4 }}
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: {{ template "chart.fullname" . }}-headless
+  name: {{ template "chart.fullname" . }}-master
   labels:
   {{- include "chart.labels" . | nindent 4 }}
-  annotations:
-    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
 spec:
-  clusterIP: None
+  type: ClusterIP
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http
