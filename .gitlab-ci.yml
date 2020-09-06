@@ -64,7 +64,7 @@ deploy-elasticstack-step:
     - tool-stack
   only:
     changes:
-      - elasticbeats/**/*
+      - elasticstack/**/*
     kubernetes: active
   except:
     changes:
