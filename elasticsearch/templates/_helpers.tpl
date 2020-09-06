@@ -63,3 +63,11 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "elasticsearch.endpoints" -}}
+{{- $replicas := int (toString (.Values.deployment.replicaCount)) }}
+{{- $uname := (include "chart.fullname" .) }}
+  {{- range $i, $e := untilStep 0 $replicas 1 -}}
+{{ $uname }}-{{ $i }},
+  {{- end -}}
+{{- end -}}

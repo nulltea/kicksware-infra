@@ -4,7 +4,7 @@ nameOverride: ""
 fullnameOverride: ""
 baseDirL: &baseDir /run/desktop/mnt/host/wsl
 
-elasticsearchHost: https://search.kicksware.com:443
+elasticsearchHost: http://elasticsearch:9200
 
 image:
   repository: docker.elastic.co/kibana/kibana

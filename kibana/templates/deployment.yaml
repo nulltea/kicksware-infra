@@ -25,11 +25,15 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
           env:
+            - name: ELASTICSEARCH_HOSTS
+              value: {{ .Values.elasticsearchHost }}
             - name: ELASTICSEARCH_URL
               value: {{ .Values.elasticsearchHost }}
+            - name: SERVER_HOST
+              value: 0.0.0.0
           volumeMounts:
             - name: config
-              mountPath: /config
+              mountPath: /usr/share/kibana/config
             {{- range .Values.volumes }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
@@ -38,6 +42,8 @@ spec:
             httpGet:
               path: /app/kibana
               port: {{ .Values.service.port }}
+            initialDelaySeconds: 60
+            periodSeconds: 15
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:

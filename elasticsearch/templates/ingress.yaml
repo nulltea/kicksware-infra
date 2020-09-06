@@ -51,6 +51,7 @@ spec:
         {{- end }}
       middlewares:
         - name: https-redirect
+          namespace: gateway
       {{- with .middlewares }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

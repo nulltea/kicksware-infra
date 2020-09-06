@@ -22,9 +22,13 @@ nginx-ingress:
 certmanager:
   install: false
 
-
 certmanager-issuer:
   email: timothy@kicksware.com
 
 gitlab-runner:
   install: false
+
+gitlab:
+  webservice:
+    minReplicas: 1
+    maxReplicas: 1

@@ -7,9 +7,5 @@ metadata:
     {{- include "chart.labels" . | nindent 4 }}
 data:
   kibana.yml: |
-    server.name: kibana
-    server.host: 0.0.0.0
-    elasticsearch.url: {{ .Values.elasticsearchHost }}
-    elasticsearch.hosts: [ {{ .Values.elasticsearchHost }} ]
-    monitoring.ui.container.elasticsearch.enabled: truebash-4.2$
+
 ---

@@ -17,3 +17,26 @@ spec:
       name: transport
   selector:
   {{- include "chart.selectorLabels" . | nindent 4 }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "chart.fullname" . }}-headless
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: {{ .Values.service.transportPort }}
+      targetPort: transport
+      protocol: TCP
+      name: transport
+  selector:
+  {{- include "chart.selectorLabels" . | nindent 4 }}
+---
