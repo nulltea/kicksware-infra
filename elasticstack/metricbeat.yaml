@@ -15,5 +15,5 @@ deployment:
       cpu: "50m"
       memory: "50Mi"
     limits:
-      cpu: "50m"
-      memory: "50Mi"
+      cpu: "100m"
+      memory: "250Mi"
