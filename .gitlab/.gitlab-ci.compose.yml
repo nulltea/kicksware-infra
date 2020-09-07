@@ -1,13 +1,17 @@
 stages:
     - deploy
 
-deploy.tool-stack:
+variables:
+  SOURCE_DIR: /source/repos/$CI_PROJECT_NAME
+
+tool-stack.deploy.compose:
   image:
     name: docker/compose:1.25.0
   services:
     - docker:stable-dind
   stage: deploy
   tags:
+    - compose
     - tool-stack
   before_script:
     - apk add make
