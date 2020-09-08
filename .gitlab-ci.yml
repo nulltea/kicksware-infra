@@ -13,8 +13,8 @@ mongodb.deploy.k8s:
     - k8s
     - tool-stack
   only:
-    changes:
-      - mongodb/**/*
+#    changes:
+#      - mongodb/**/*
     kubernetes: active
   except:
     changes:
@@ -30,8 +30,8 @@ elasticsearch.deploy.k8s:
     - k8s
     - tool-stack
   only:
-    changes:
-      - elasticsearch/**/*
+#    changes:
+#      - elasticsearch/**/*
     kubernetes: active
   except:
     changes:
@@ -45,8 +45,8 @@ kibana.deploy.k8s:
     - k8s
     - tool-stack
   only:
-    changes:
-      - kibana/**/*
+#    changes:
+#      - kibana/**/*
     kubernetes: active
   except:
     changes:
@@ -60,8 +60,8 @@ elasticstack.deploy.k8s:
     - k8s
     - tool-stack
   only:
-    changes:
-      - elasticstack/**/*
+#    changes:
+#      - elasticstack/**/*
     kubernetes: active
   except:
     changes:
@@ -71,7 +71,7 @@ elasticstack.deploy.k8s:
     - helm repo update
     # - helm upgrade --install -n toolstack logstash elastic/logstash -f=elasticstack/logstash.yaml
     - helm upgrade --install -n toolstack filebeat elastic/filebeat -f=elasticstack/filebeat.yaml
-    - helm upgrade --install -n toolstack metricbeat elastic/metricbeat -f=elasticstack/metricbeat.yaml
+    # - helm upgrade --install -n toolstack metricbeat elastic/metricbeat -f=elasticstack/metricbeat.yaml
     # - helm upgrade --install apm-server elastic/apm-server -f=elasticstack/apm-server.yaml
 
 gitlab-ci.deploy.k8s:
