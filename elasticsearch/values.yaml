@@ -40,7 +40,7 @@ volumes:
   - name: cert
     persistent:
       claim: elasticsearch.data-claim
-      storageClass: nfs
+      storageClass: glusterfs
       size: 3Gi
       accessModes:
         - ReadWriteOnce
@@ -48,7 +48,7 @@ volumes:
   - name: backup
     persistent:
       claim: elasticsearch.backup-claim
-      storageClass: nfs
+      storageClass: glusterfs
       size: 1Gi
       accessModes:
         - ReadWriteOnce
