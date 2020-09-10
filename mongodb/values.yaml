@@ -37,7 +37,7 @@ ingress:
 volumes:
   - name: data
     persistent:
-      claim: mongodb.db-claim
+      claim: mongodb_db-claim
       storageClass: glusterfs
       size: 2Gi
       accessModes:
@@ -45,7 +45,7 @@ volumes:
     mountPath: /data/db
   - name: backup
     persistent:
-      claim: mongodb.backup-claim
+      claim: mongodb_backup-claim
       storageClass: glusterfs
       size: 1Gi
       accessModes:
