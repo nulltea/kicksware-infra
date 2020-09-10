@@ -39,7 +39,7 @@ ingress:
 volumes:
   - name: cert
     persistent:
-      claim: elasticsearch_data-claim
+      claim: elasticsearch-dataclaim
       storageClass: glusterfs
       size: 3Gi
       accessModes:
@@ -47,7 +47,7 @@ volumes:
     mountPath: /usr/share/elasticsearch/data
   - name: backup
     persistent:
-      claim: elasticsearch_backup-claim
+      claim: elasticsearch-backupclaim
       storageClass: glusterfs
       size: 1Gi
       accessModes:
