@@ -1,0 +1,97 @@
+project: kicksware
+component: gluster-fs
+nameOverride: ""
+fullnameOverride: ""
+
+gluster:
+  image:
+    repository: gluster/gluster-centos
+    tag: latest
+    pullPolicy: Always
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 200Mi
+
+heketi:
+  image:
+    repository: heketi/heketi
+    tag: latest
+    pullPolicy: Always
+  authSecret: heketi-auth
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 200Mi
+
+storageClass:
+  create: true
+  name: glusterfs
+  endpointURL: http://10.245.240.120:8080
+  isDefault: false
+  reclaimPolicy: Retain
+  volumeNamePrefix: gfs
+  volumeType: none
+  allowVolumeExpansion: true
+  volumeBindingMode: Immediate
+
+deployment:
+  replicaCount: 1
+  nodeSelector:
+    enabled: true
+    key: storagenode
+    value: glusterfs
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  entrypoints:
+    - web
+    - websecure
+  tls:
+    enabled: false
+    certResolver: le
+  routes:
+    - host: nfs.kicksware.com
+      paths:
+        - /
+      services:
+        - name: gluster-heketi
+          port: 8080
+
+volumes: {}
+
+serviceAccount:
+  create: true
+  name: ""
+
+topology:
+  clusters:
+    - nodes:
+      - node:
+          hostnames:
+            manage:
+              - kicksware-pool-3a4a5
+            storage:
+              - 10.114.0.7
+          zone: 1
+        devices:
+          - /dev/disk/gluster-disk
+      - node:
+          hostnames:
+            manage:
+              - kicksware-pool-3a4as
+            storage:
+              - 10.114.0.5
+          zone: 1
+          devices:
+            - /dev/disk/gluster-disk

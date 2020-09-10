@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "chart.fullname" . }}.topology
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+data:
+  topology.json: |-
+    {{- .Values.topology | toJson | nindent 4}}

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: gluster-fs
+description: GlusterFS is a scalable network filesystem
+type: application
+version: 0.1.0
+appVersion: 1.0.0
+sources:
+  - https://github.com/gluster/glusterfs
+  - https://github.com/timoth-y/kicksware-tool-stack
+maintainers:
+  - name: Timothy Yalugin

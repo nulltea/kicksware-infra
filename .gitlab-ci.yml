@@ -89,7 +89,7 @@ gitlab-ci.deploy.k8s:
   script:
     - helm repo add gitlab https://charts.gitlab.io/
     - helm repo update
-    - helm upgrade --install -n gitlab gitlab-ci gitlab/gitlab -f=gitlab-ci/gitlab-ce/values.yaml
+    # - helm upgrade --install -n gitlab gitlab-ci gitlab/gitlab -f=gitlab-ci/gitlab-ce/values.yaml
 
 gitlab-runner.deploy.k8s:
   stage: deploy

@@ -1,0 +1,184 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "chart.fullname" . }}-gluster
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      glusterfs: pod
+      glusterfs-node: daemonset
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        glusterfs: pod
+        glusterfs-node: daemonset
+        {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "chart.serviceAccountName" . }}-gluster
+      {{- if .Values.deployment.nodeSelector.enabled }}
+      nodeSelector:
+        {{ .Values.deployment.nodeSelector.key}}: {{ .Values.deployment.nodeSelector.value }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.gluster.image.repository }}:{{ .Values.gluster.image.tag }}"
+          imagePullPolicy: {{ .Values.gluster.image.pullPolicy }}
+          volumeMounts:
+            - name: glusterfs-heketi
+              mountPath: "/var/lib/heketi"
+            - name: glusterfs-run
+              mountPath: "/run"
+            - name: glusterfs-lvm
+              mountPath: "/run/lvm"
+            - name: glusterfs-etc
+              mountPath: "/etc/glusterfs"
+            - name: glusterfs-logs
+              mountPath: "/var/log/glusterfs"
+            - name: glusterfs-config
+              mountPath: "/var/lib/glusterd"
+            - name: glusterfs-dev
+              mountPath: "/dev"
+            - name: glusterfs-misc
+              mountPath: "/var/lib/misc/glusterfsd"
+            - name: glusterfs-cgroup
+              mountPath: "/sys/fs/cgroup"
+          securityContext:
+            capabilities: {}
+            privileged: true
+          readinessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 60
+            exec:
+              command:
+                - "/bin/bash"
+                - "-c"
+                - systemctl status glusterd.service
+          livenessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 60
+            exec:
+              command:
+                - "/bin/bash"
+                - "-c"
+                - systemctl status glusterd.service
+          resources:
+            {{- toYaml .Values.gluster.resources | nindent 12 }}
+      hostNetwork: true
+      volumes:
+        - name: glusterfs-heketi
+          hostPath:
+            path: "/var/lib/heketi"
+        - name: glusterfs-run
+        - name: glusterfs-lvm
+          hostPath:
+            path: "/run/lvm"
+        - name: glusterfs-etc
+          hostPath:
+            path: "/etc/glusterfs"
+        - name: glusterfs-logs
+          hostPath:
+            path: "/var/log/glusterfs"
+        - name: glusterfs-config
+          hostPath:
+            path: "/var/lib/glusterd"
+        - name: glusterfs-dev
+          hostPath:
+            path: "/dev"
+        - name: glusterfs-misc
+          hostPath:
+            path: "/var/lib/misc/glusterfsd"
+        - name: glusterfs-cgroup
+          hostPath:
+            path: "/sys/fs/cgroup"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chart.fullname" . }}.heketi
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount}}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+  {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+    {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "chart.serviceAccountName" . }}-heketi
+      containers:
+        - image: '{{ .Values.heketi.image.repository }}:{{ .Values.heketi.image.tag }}'
+          imagePullPolicy: {{ .Values.heketi.image.pullPolicy }}
+          name: heketi
+          env:
+            - name: HEKETI_EXECUTOR
+              value: kubernetes
+            - name: HEKETI_FSTAB
+              value: /var/lib/heketi/fstab
+            - name: HEKETI_SNAPSHOT_LIMIT
+              value: '14'
+            - name: HEKETI_KUBE_GLUSTER_DAEMONSET
+              value: "y"
+            - name: HEKETI_KUBE_NAMESPACE
+              value: "{{.Release.Namespace}}"
+            - name: HEKETI_TOPOLOGY_FILE
+              value: /etc/heketi-topology/topology.json
+            - name: HEKETI_ADMIN_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.heketi.authSecret }}
+                  key: admin_password
+            - name: HEKETI_CLI_USER
+              value: admin
+            - name: HEKETI_CLI_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.heketi.authSecret }}
+                  key: admin_password
+            - name: HEKETI_IGNORE_STALE_OPERATIONS
+              value: "true"
+            - name: HEKETI_CLI_SERVER
+              value: "http://localhost:8080"
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: db
+              mountPath: /var/lib/heketi
+            - name: heketi-db-secret
+              mountPath: /backupdb
+            - name: heketi-topology
+              mountPath: /etc/heketi-topology
+          readinessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 3
+            httpGet:
+              path: /hello
+              port: {{ .Values.service.port }}
+          livenessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 30
+            httpGet:
+              path: /hello
+              port: {{ .Values.service.port }}
+          resources:
+            {{- toYaml .Values.heketi.resources | nindent 12 }}
+      volumes:
+        - name: db
+          emptyDir: {}
+        - name: heketi-db-secret
+          secret:
+            secretName: heketi-db-backup
+        - name: heketi-topology
+          configMap:
+            name: {{ template "chart.fullname" . }}.topology
+

@@ -37,7 +37,7 @@ ingress:
 volumes:
   - name: data
     persistent:
-      claim: mongodb.data-claim
+      claim: mongodb.db-claim
       storageClass: nfs
       size: 2Gi
       accessModes:

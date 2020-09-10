@@ -1,0 +1,19 @@
+{{- if .Values.storageClass.create }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ .Values.storageClass.name }}
+  annotations:
+    storageclass.beta.kubernetes.io/is-default-class: {{ .Values.storageClass.isDefault | quote }}
+parameters:
+  resturl: {{ .Values.storageClass.endpointURL }}
+  restuser: admin
+  secretName: {{ .Values.heketi.authSecret }}
+  secretNamespace: {{ .Release.Namespace }}
+  volumetype: {{ .Values.storageClass.volumeType }}
+  volumenameprefix: {{ .Values.storageClass.volumeNamePrefix }}
+provisioner: kubernetes.io/glusterfs
+reclaimPolicy: {{ .Values.storageClass.reclaimPolicy }}
+volumeBindingMode: {{ .Values.storageClass.volumeBindingMode }}
+allowVolumeExpansion: {{ .Values.storageClass.allowVolumeExpansion }}
+{{- end }}
