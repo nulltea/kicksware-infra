@@ -33,7 +33,7 @@ heketi:
 storageClass:
   create: true
   name: glusterfs
-  endpointURL: http://10.245.240.120:8080
+  endpointURL: https://nfs.kicksware.com:443
   isDefault: false
   reclaimPolicy: Retain
   volumeNamePrefix: gfs
