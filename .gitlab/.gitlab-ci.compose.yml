@@ -13,11 +13,11 @@ tool-stack.deploy.compose:
   tags:
     - compose
     - tool-stack
+  except:
+    kubernetes: active
   before_script:
     - apk add make
     - make mongo-backup
-  except:
-    kubernetes: active
   script:
     - make stack
   after_script:

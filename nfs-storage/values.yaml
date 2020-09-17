@@ -1,0 +1,4 @@
+persistence:
+  enabled: true
+  storageClass: do-block-storage
+  size: 25Gi

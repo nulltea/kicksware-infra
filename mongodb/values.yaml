@@ -38,15 +38,15 @@ volumes:
   - name: data
     persistent:
       claim: mongodb-dbclaim
-      storageClass: glusterfs
-      size: 2Gi
+      storageClass: nfs
+      size: 1Gi
       accessModes:
         - ReadWriteOnce
     mountPath: /data/db
   - name: backup
     persistent:
       claim: mongodb-backupclaim
-      storageClass: glusterfs
+      storageClass: nfs
       size: 1Gi
       accessModes:
         - ReadWriteOnce
