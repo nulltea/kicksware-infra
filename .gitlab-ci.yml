@@ -126,20 +126,6 @@ gitlab-addons.deploy.k8s:
 
 # check stage steps:
 
-mongodb.check.k8s:
-  image: curlimages/curl
-  stage: check
-  tags:
-    - k8s
-    - tool-stack
-  before_script:
-    - echo Waiting half a minute for db to properly start or fail... && sleep 30s
-  script:
-    - curl "https://$DB_ENDPOINT_URL" -f -o /dev/null || exit 1 | echo -e "\e[91mDB  dead! Triggering check job failure"
-    - echo -e "\e[36mDB is live and ready. ready. Check job succeeded!"
-  dependencies: []
-  retry: 2
-
 elasticsearch.check.k8s:
   image: curlimages/curl
   stage: check
