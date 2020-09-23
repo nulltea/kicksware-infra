@@ -9,3 +9,4 @@ keys/
 cert/
 backup/mongo/
 certs/
+nfs-storage/shared-storage.pv.yaml
