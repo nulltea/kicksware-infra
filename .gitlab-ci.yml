@@ -4,6 +4,7 @@ image: dtzar/helm-kubectl:3.3.0
 
 stages:
   - deploy
+  - check
 
 # deploy stage steps:
 
@@ -122,3 +123,47 @@ gitlab-addons.deploy.k8s:
       - "*.md"
   script:
     - helm upgrade --install -n gitlab gitlab-ci-addons gitlab-ci/gitlab-addons/
+
+# check stage steps:
+
+mongodb.check.k8s:
+  image: curlimages/curl
+  stage: check
+  tags:
+    - k8s
+    - tool-stack
+  before_script:
+    - echo Waiting half a minute for db to properly start or fail... && sleep 30s
+  script:
+    - curl "https://$DB_ENDPOINT_URL" -f -o /dev/null || exit 1 | echo -e "\e[91mDB  dead! Triggering check job failure"
+    - echo -e "\e[36mDB is live and ready. ready. Check job succeeded!"
+  dependencies: []
+  retry: 2
+
+elasticsearch.check.k8s:
+  image: curlimages/curl
+  stage: check
+  tags:
+    - k8s
+    - tool-stack
+  before_script:
+    - echo Waiting half a minute for search engine to properly start or fail... && sleep 30s
+  script:
+    - curl "https://$SEACRH_ENDPOINT_URL" -f -o /dev/null || exit 1 | echo -e "\e[91mSearch engine dead! Triggering check job failure"
+    - echo -e "\e[36mSearch engine is live and ready. ready. Check job succeeded!"
+  dependencies: []
+  retry: 2
+
+kibana.check.k8s:
+  image: curlimages/curl
+  stage: check
+  tags:
+    - k8s
+    - tool-stack
+  before_script:
+    - echo Waiting half a minute for web app to properly start or fail... && sleep 30s
+  script:
+    - curl "https://$ANALYTICS_ENDPOINT_URL/app/live" -f -o /dev/null || exit 1 | echo -e "\e[91mWeb app dead! Triggering check job failure"
+    - echo -e "\e[36mWeb app is live and ready. ready. Check job succeeded!"
+  dependencies: []
+  retry: 2
