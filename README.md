@@ -21,6 +21,16 @@
 
 _**Kicksware Tool Stack**_ is a composite [DevOps][devops] technology stack solution dedicated to provision data, storage, continuous deployment, analytics, monitoring, and more tools needed for Kicksware infrastructure to function as complete autonomous mechanism.
 
+## Table of contents
+
+* [Overview](#overview)
+* [DevOps](#devops)
+* [Applications](#applications)
+* [Requirements](#requirements)
+* [Deployment](#deployment)
+* [Wrap Up](#wrap-up)
+* [License](#license)
+
 ## DevOps
 
 To constantly deliver its particular set of services every component of Kicksware infrastructure goes through its own development life cycle, every new iteration of which is triggered by every new commit to the codebase.
