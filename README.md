@@ -29,7 +29,7 @@ From there it goes through the individual set of stages, each dedicated to ensur
 
 This whole process is accordingly called [Continuous delivery (deployment) and continuous integration (CI/CD)][continuous delivery]. In fact, this practice is so crucial and adopted that currently there are [more than 50 CI/CD][50 ci\cd] tools out there waiting to be used.
 
-Kicksware's CI\CD deployment pipeline is based on [Gitlab CI Community Edition][gitlab ce]. As a matter of fact, [continuous delivery][gitlab ci] is only one side of its [diverse comprehensive feature set][gitlab features]. Besides it, things like Git repositories storage, container and package registries, issue tracking, and really a lot more great features that makes GitLab a complete DevOps platform for any types of system.
+Kicksware's CI\CD deployment pipeline is based on [Gitlab CI Community Edition][gitlab ce]. As a matter of fact, [continuous delivery][gitlab ci] is only one side of its [diverse, comprehensive feature set][gitlab features]. Besides it, things like Git repositories storage, container and package registries, issue tracking, and really a lot more great features that makes GitLab a complete DevOps platform for any types of system.
 
 [![kicksware ci browser][]][kicksware ci url]
 
@@ -72,6 +72,10 @@ To perform deployment of Kicksware tool stack solution following methods can be 
    Gitlab CI deployment pipeline [configuration file][ci k8s config] for K8s method can also be found in the root of the project.
 
 ## Wrap Up
+
+Kicksware's infrastructure technology stack is a set of high-end, diverse, cloud-native, and production-ready tools, solutions, and applications, each is accurately picked to operate in its specific area with maximum efficiency.
+
+To ensure continuous delivery, high efficiency, security, and overall reliability of its service Kicksware pays great attention to the DevOps area that covers the complete development lifecycle from each code commitment to its finale publication for users to enjoy.
 
 ## License
 
