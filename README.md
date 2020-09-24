@@ -41,11 +41,35 @@ The most obvious application is of course databases. Without storing any data it
 
 In addition, some services depends on a more specific type of software. For instance, a search microservice is requiring some kind of search engine, to deliver the result faster and more efficient. So for this particular use case, [Elasticsearch][elasticsearch] is used, witch in combination with the [Kibana][kibana] analytics dashboard web application produce [Elastic Stack solution][elastic stack]. Some of the [Elastic's][elastic co] [observability tools][elastic observability] are also worth noting, like [LogStash][elastic logstash] and [Beats][elastic beats] for gathering logs and metrics. And overall experience using [this company's software][elastic co] is pretty much awesome, so it's definitely an advise.
 
-[![kibana browser][]][analytics url]
+[//]: # ([![kibana browser][]][analytics url])
 
 ## Requirements
 
+Kicksware tool stack is meant to be deployed after Traefik gateway ingress and before everything else which depends on its applications.
+
+In addition, every further deployment must be performed using CI\CD pipelines according to its configuration.
+
 ## Deployment
+
+To perform deployment of Kicksware tool stack solution following methods can be used:
+
+1. **Docker Compose file**
+
+   This method require single dedicated server with installed both [`docker`][docker-compose] and [`docker-compose`][docker-compose] utilities.
+
+   Compose [configuration file][compose config] can be found in root of the project. This file already contains setting for reverse proxy routing and load balancing.
+
+   Gitlab CI deployment pipeline [configuration file][ci compose config] for compose method can be found in `.gitlab` directory.
+
+2. **Kubernetes Helm charts**
+
+   Deployment to Kubernetes cluster is the default and desired way.
+
+   For more flexible and easier deployment [Helm package manager][helm] is used. It provides a simple, yet elegant way to write pre-configured, reusable Kubernetes resources configuration using YAML and Go Templates (or Lua scripts). Helm packages are called `charts`.
+
+   This whole project is basically a set of [Helm deployment charts][helm charts] which can be found in the root of the project.
+
+   Gitlab CI deployment pipeline [configuration file][ci k8s config] for K8s method can also be found in the root of the project.
 
 ## Wrap Up
 
@@ -100,6 +124,6 @@ Licensed under the [GNU AGPL-3.0][license file].
 [ci k8s config]: https://github.com/timoth-y/kicksware-tool-stack/blob/master/.gitlab-ci.yml
 
 [helm]: https://helm.sh/
-[helm chart]: https://github.com/timoth-y/kicksware-tool-stack/tree/master/webapp-chart
+[helm charts]: https://github.com/timoth-y/kicksware-tool-stack/tree/master
 
 [license file]: https://github.com/timoth-y/kicksware-tool-stack/blob/master/LICENSE
