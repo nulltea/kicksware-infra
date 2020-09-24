@@ -45,8 +45,6 @@ In addition, some services depends on a more specific type of software. For inst
 
 ## Requirements
 
-
-
 ## Deployment
 
 ## Wrap Up
@@ -78,7 +76,7 @@ Licensed under the [GNU AGPL-3.0][license file].
 [gitlab ci]: https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/
 [gitlab features]: https://about.gitlab.com/features/
 
-[kicksware ci browser]: https://ci.kicksware.com/kicksware/tool-stack/-/raw/master/assets/ci-browser.png
+[kicksware ci browser]: https://ci.kicksware.com/kicksware/tool-stack/-/raw/master/assets/gitlab-browser.png
 [kicksware ci url]: https://ci.kicksware.com/kicksware
 
 [postgresql]: https://www.postgresql.org/
@@ -92,9 +90,8 @@ Licensed under the [GNU AGPL-3.0][license file].
 [elastic beats]: https://www.elastic.co/beats/
 [elastic co]: https://www.elastic.co/about/
 
-[kibana brouwser]: h
-[analytics url]: https://analitics.kicksware.com/app
-
+[kibana browser]: https://ci.kicksware.com/kicksware/tool-stack/-/raw/master/assets/kibana-browser.png
+[analytics url]: https://analitics.kicksware.com/app/observability#/overview
 
 [docker-desktop]: https://docs.docker.com/desktop/
 [docker-compose]: https://docs.docker.com/compose/
