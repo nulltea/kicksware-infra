@@ -51,7 +51,7 @@ The most obvious application is of course databases. Without storing any data it
 
 In addition, some services depends on a more specific type of software. For instance, a search microservice is requiring some kind of search engine, to deliver the result faster and more efficient. So for this particular use case, [Elasticsearch][elasticsearch] is used, witch in combination with the [Kibana][kibana] analytics dashboard web application produce [Elastic Stack solution][elastic stack]. Some of the [Elastic's][elastic co] [observability tools][elastic observability] are also worth noting, like [LogStash][elastic logstash] and [Beats][elastic beats] for gathering logs and metrics. And overall experience using [this company's software][elastic co] is pretty much awesome, so it's definitely an advise.
 
-[//]: # ([![kibana browser][]][analytics url])
+[![kibana browser][]][analytics url]
 
 ## Requirements
 
@@ -86,6 +86,8 @@ To perform deployment of Kicksware tool stack solution following methods can be 
 Kicksware's infrastructure technology stack is a set of high-end, diverse, cloud-native, and production-ready tools, solutions, and applications, each is accurately picked to operate in its specific area with maximum efficiency.
 
 To ensure continuous delivery, high efficiency, security, and overall reliability of its service Kicksware pays great attention to the DevOps area that covers the complete development lifecycle from each code commitment to its finale publication for users to enjoy.
+
+After all, Kicksware was primarily a research project dedicated to the exploration of recent cloud technologies and architectural design paradigms, so its level of success estimates according to the aggregated quality and relevance of both its technology stack and architectural design pattern, and their overall impact on Kicksware infrastructure performance.
 
 ## License
 
@@ -129,7 +131,7 @@ Licensed under the [GNU AGPL-3.0][license file].
 [elastic co]: https://www.elastic.co/about/
 
 [kibana browser]: https://ci.kicksware.com/kicksware/tool-stack/-/raw/master/assets/kibana-browser.png
-[analytics url]: https://analitics.kicksware.com/app/observability#/overview
+[analytics url]: https://analytics.kicksware.com/app/dashboards#/view/24b8ed50-fee0-11ea-83ea-35465356722d
 
 [docker-desktop]: https://docs.docker.com/desktop/
 [docker-compose]: https://docs.docker.com/compose/
