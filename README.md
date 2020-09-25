@@ -67,7 +67,7 @@ To perform deployment of Kicksware tool stack solution following methods can be 
 
    This method require single dedicated server with installed both [`docker`][docker-compose] and [`docker-compose`][docker-compose] utilities.
 
-   Compose [configuration file][compose config] can be found in root of the project. This file already contains setting for reverse proxy routing and load balancing.
+   Compose [configuration file][compose config] can be found in the root of the project. This file already contains setting for reverse proxy routing and load balancing.
 
    Gitlab CI deployment pipeline [configuration file][ci compose config] for compose method can be found in `.gitlab` directory.
 
@@ -75,7 +75,7 @@ To perform deployment of Kicksware tool stack solution following methods can be 
 
    Deployment to Kubernetes cluster is the default and desired way.
 
-   For more flexible and easier deployment [Helm package manager][helm] is used. It provides a simple, yet elegant way to write pre-configured, reusable Kubernetes resources configuration using YAML and Go Templates (or Lua scripts). Helm packages are called `charts`.
+   For more flexible and easier deployment [Helm package manager][helm] is used. It provides a simple, yet elegant way to write pre-configured, reusable Kubernetes resource configuration using YAML and Go Templates (or Lua scripts). Helm packages are called `charts`.
 
    This whole project is basically a set of [Helm deployment charts][helm charts] which can be found in the root of the project.
 
