@@ -1,0 +1,19 @@
+# install:  helm upgrade --install heartbeat -n toolstack stable/heartbeat -f=elasticstack/heartbeat.yaml
+
+image:
+  tag: 7.9.0
+
+hostNetwork: true
+
+config:
+  output.file:
+  output.elasticsearch:
+    hosts: ["elasticsearch:9200"]
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "50Mi"
+  limits:
+    cpu: "50m"
+    memory: "50Mi"

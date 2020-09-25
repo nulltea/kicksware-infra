@@ -1,5 +1,8 @@
+# install:  helm upgrade --install metricbeat -n toolstack elastic/metricbeat -f=elasticstack/metricbeat.yaml
+
 daemonset:
   enabled: true
+  hostNetworking: true
   resources:
     requests:
       cpu: "50m"
@@ -9,7 +12,7 @@ daemonset:
       memory: "50Mi"
 
 deployment:
-  enabled: false
+  enabled: true
   resources:
     requests:
       cpu: "50m"

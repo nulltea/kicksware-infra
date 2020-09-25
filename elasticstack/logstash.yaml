@@ -1,3 +1,5 @@
+# install:  helm upgrade --install logstash -n toolstack elastic/logstash -f=elasticstack/logstash.yaml
+
 logstashJavaOpts: "-Xms512m -Xmx512m"
 
 resources:

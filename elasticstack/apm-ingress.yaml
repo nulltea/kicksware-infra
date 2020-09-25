@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: apm-server
+  labels:
+    name: apm-server
+    instance: apm-server
+    project: kicksware
+    component: apm
+    release: apm-server
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`apm.kicksware.com`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: apm-server
+          port: 8200
+          scheme: http

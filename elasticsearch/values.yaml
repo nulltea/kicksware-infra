@@ -40,15 +40,15 @@ volumes:
   - name: cert
     persistent:
       claim: elasticsearch-dataclaim
-      storageClass: glusterfs
-      size: 3Gi
+      storageClass: nfs
+      size: 10Gi
       accessModes:
         - ReadWriteOnce
     mountPath: /usr/share/elasticsearch/data
-  - name: backup
+  - name: nfs
     persistent:
       claim: elasticsearch-backupclaim
-      storageClass: glusterfs
+      storageClass: nfs
       size: 1Gi
       accessModes:
         - ReadWriteOnce

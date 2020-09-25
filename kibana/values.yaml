@@ -27,7 +27,7 @@ ingress:
     enabled: true
     certResolver: le
   routes:
-    - host: analitics.kicksware.com
+    - host: analytics.kicksware.com
       paths:
         - /
       middlewares: []

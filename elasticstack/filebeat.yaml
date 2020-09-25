@@ -1,3 +1,5 @@
+# install:  helm upgrade --install -n toolstack filebeat elastic/filebeat -f=elasticstack/filebeat.yaml 
+
 resources:
   requests:
     cpu: "100m"
@@ -5,3 +7,7 @@ resources:
   limits:
     cpu: "250m"
     memory: "100Mi"
+
+extraEnvs:
+  - name: ELASTICSEARCH_HOSTS
+    value: elasticsearch:9200

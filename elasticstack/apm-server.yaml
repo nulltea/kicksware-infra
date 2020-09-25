@@ -1,3 +1,7 @@
+# install: helm upgrade --install -n toolstack apm-server elastic/apm-server -f=elasticstack/apm-server.yaml
+
+fullnameOverride: apm-server
+
 resources:
   requests:
     cpu: "100m"
