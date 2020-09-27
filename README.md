@@ -19,7 +19,7 @@
 
 ## Overview
 
-_**Kicksware Tool Stack**_ is a composite [DevOps][devops] technology stack solution dedicated to provision data, storage, continuous deployment, analytics, monitoring, and more tools needed for Kicksware infrastructure to function as complete autonomous mechanism.
+_**Kicksware Tool Stack**_ is a composite [DevOps][devops] technology stack solution dedicated to provisioning data, storage, continuous deployment, analytics, monitoring, and more tools needed for Kicksware infrastructure to function as a complete autonomous mechanism.
 
 ## Table of contents
 
@@ -33,23 +33,23 @@ _**Kicksware Tool Stack**_ is a composite [DevOps][devops] technology stack solu
 
 ## DevOps
 
-To constantly deliver its particular set of services every component of Kicksware infrastructure goes through its own development life cycle, every new iteration of which is triggered by every new commit to the codebase.
+To constantly deliver its particular set of services, every component of Kicksware infrastructure goes through its own development lifecycle, every new iteration of which is triggered by every new commit to the codebase.
 
-From there it goes through the individual set of stages, each dedicated to ensure the best possible software quality, Generally, these stages are representing base steps needed to build, test and deploy every new piece of code committed to repositories. Although sometimes additional steps are required, such as resolving dependencies, preparing the environment and finale checks whether the pipeline succeeded and services are ready to serve.
+From there it goes through the individual set of stages, each dedicated to ensure the best possible software quality. Generally, these stages represent base steps needed to build, test and deploy every new piece of code committed to repositories. However, sometimes additional steps are required, such as resolving dependencies, preparing the environment and finale checks whether the pipeline has succeeded and services are ready to serve.
 
 This whole process is accordingly called [Continuous delivery (deployment) and continuous integration (CI/CD)][continuous delivery]. In fact, this practice is so crucial and adopted that currently there are [more than 50 CI/CD][50 ci\cd] tools out there waiting to be used.
 
-Kicksware's CI\CD deployment pipeline is based on [Gitlab CI Community Edition][gitlab ce]. As a matter of fact, [continuous delivery][gitlab ci] is only one side of its [diverse, comprehensive feature set][gitlab features]. Besides it, things like Git repositories storage, container and package registries, issue tracking, and really a lot more great features that makes GitLab a complete DevOps platform for any types of system.
+Kicksware's CI\CD deployment pipeline is based on [Gitlab CI Community Edition][gitlab ce]. As a matter of fact, [continuous delivery][gitlab ci] is only one side of its [diverse, comprehensive feature set][gitlab features]. Besides, things like Git repositories storage, container and package registries, issue tracking, and really a lot more great features make GitLab a complete DevOps platform for any types of system.
 
 [![kicksware ci browser][]][kicksware ci url]
 
 ## Applications
 
-Aside from development and deployment enhancement tools, Kicksware application services themselves require some additional tools to be able to perform tasks they programmed for.
+Aside from development and deployment enhancement tools, Kicksware application services themselves require some additional tools to be able to perform tasks they are programmed for.
 
-The most obvious application is of course databases. Without storing any data it is nearly impossible to achieve the fulfillment of all the business requirements. Therefore, to store user, product, orders, and reference data Kicksware tool stack contain both [document-based MongoDB][mongodb] and [relational PostgreSQL][postgresql]. And for caching, [blazing-fast Redis][redis] is used, as it is a key-value based, distributed, in-memory database.
+The most obvious application is, of course, database. Without storing any data it is nearly impossible to achieve the fulfillment of all the business requirements. Therefore, to store user, product, orders, and reference data, Kicksware tool stack contains both [document-based MongoDB][mongodb] and [relational PostgreSQL][postgresql]. And for caching, [blazing-fast Redis][redis] is used, since it is a key-value based, distributed, in-memory database.
 
-In addition, some services depends on a more specific type of software. For instance, a search microservice is requiring some kind of search engine, to deliver the result faster and more efficient. So for this particular use case, [Elasticsearch][elasticsearch] is used, witch in combination with the [Kibana][kibana] analytics dashboard web application produce [Elastic Stack solution][elastic stack]. Some of the [Elastic's][elastic co] [observability tools][elastic observability] are also worth noting, like [LogStash][elastic logstash] and [Beats][elastic beats] for gathering logs and metrics. And overall experience using [this company's software][elastic co] is pretty much awesome, so it's definitely an advise.
+In addition, some services depend on a more specific type of software. For instance, a search microservice is requiring some kind of search engine to deliver the result faster and more efficiently. So, for this particular use case, [Elasticsearch][elasticsearch] is used, which in combination with the [Kibana][kibana] analytics dashboard web application produces [Elastic Stack solution][elastic stack]. Some of the [Elastic's][elastic co] [observability tools][elastic observability], such as [LogStash][elastic logstash] and [Beats][elastic beats] used for gathering logs and metrics, are also worth noticing. And overall experience using [this company's software][elastic co] is pretty much awesome, so it's definitely worth trying.
 
 [![kibana browser][]][analytics url]
 
@@ -83,11 +83,11 @@ To perform deployment of Kicksware tool stack solution following methods can be 
 
 ## Wrap Up
 
-Kicksware's infrastructure technology stack is a set of high-end, diverse, cloud-native, and production-ready tools, solutions, and applications, each is accurately picked to operate in its specific area with maximum efficiency.
+Kicksware's infrastructure technology stack is a set of high-end, diverse, cloud-native, and production-ready tools, solutions, and applications, each one is accurately picked to operate in its specific area with maximum efficiency.
 
-To ensure continuous delivery, high efficiency, security, and overall reliability of its service Kicksware pays great attention to the DevOps area that covers the complete development lifecycle from each code commitment to its finale publication for users to enjoy.
+To ensure continuous delivery, high efficiency, security, and overall reliability of its service, Kicksware pays great attention to the DevOps area that covers the complete development lifecycle from each code commitment to its finale publication for users to enjoy.
 
-After all, Kicksware was primarily a research project dedicated to the exploration of recent cloud technologies and architectural design paradigms, so its level of success estimates according to the aggregated quality and relevance of both its technology stack and architectural design pattern, and their overall impact on Kicksware infrastructure performance.
+After all, Kicksware has been primarily a research project dedicated to the exploration of recent cloud technologies and architectural design paradigms, so its level of success estimates according to the aggregated quality and relevance of both its technology stack and architectural design pattern, as well as their overall impact on Kicksware infrastructure performance.
 
 ## License
 
