@@ -3,6 +3,7 @@ kind: DaemonSet
 metadata:
   name: {{ template "chart.fullname" . }}-gluster
   labels:
+    glusterfs: daemonset
   {{- include "chart.labels" . | nindent 4 }}
 spec:
   updateStrategy:

@@ -39,7 +39,7 @@ volumes:
     persistent:
       claim: mongodb-dbclaim
       storageClass: nfs
-      size: 1Gi
+      size: 3Gi
       accessModes:
         - ReadWriteOnce
     mountPath: /data/db
@@ -47,7 +47,7 @@ volumes:
     persistent:
       claim: mongodb-backupclaim
       storageClass: nfs
-      size: 1Gi
+      size: 2Gi
       accessModes:
         - ReadWriteOnce
     mountPath: /source/backup

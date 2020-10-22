@@ -33,7 +33,7 @@ heketi:
 storageClass:
   create: true
   name: glusterfs
-  endpointURL: http://10.245.119.255:8080
+  endpointURL: http://10.245.189.193:8080
   isDefault: false
   reclaimPolicy: Retain
   volumeNamePrefix: gfs
@@ -80,27 +80,27 @@ topology:
       - node:
           hostnames:
             manage:
-              - kicksware-pool-3a4a5
+              - kicksware-k8s-3pdt3
             storage:
-              - 10.114.0.7
+              - 10.114.0.5
           zone: 1
         devices:
           - /dev/disk/gluster-disk
       - node:
           hostnames:
             manage:
-              - kicksware-pool-3a4as
+              - kicksware-k8s-3pdt8
             storage:
-              - 10.114.0.5
+              - 10.114.0.3
           zone: 1
-          devices:
-            - /dev/disk/gluster-disk
+        devices:
+          - /dev/disk/gluster-disk
       - node:
           hostnames:
             manage:
-              - kicksware-pool-3az8p
+              - kicksware-k8s-3pdtu
             storage:
-              - 10.114.0.2
+              - 10.114.0.4
           zone: 1
-          devices:
-            - /dev/disk/gluster-disk
+        devices:
+          - /dev/disk/gluster-disk

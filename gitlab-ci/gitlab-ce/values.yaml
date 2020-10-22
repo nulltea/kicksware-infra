@@ -14,8 +14,24 @@ global:
     enabled: false
     configureCertmanager: false
 
+gitlab:
+  webservice:
+    minReplicas: 1
+    maxReplicas: 1
+
+  gitaly:
+    persistence:
+      enabled: true
+      size: 25Gi
+
+minio:
+  persistence:
+    enabled: true
+    size: 25Gi
+
 ingress:
   enabled: false
+
 nginx-ingress:
   enabled: false
 
@@ -28,7 +44,6 @@ certmanager-issuer:
 gitlab-runner:
   install: false
 
-gitlab:
-  webservice:
-    minReplicas: 1
-    maxReplicas: 1
+prometheus:
+  install: false
+

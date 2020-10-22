@@ -6,7 +6,7 @@ baseDirL: &baseDir /run/desktop/mnt/host/wsl
 
 image:
   repository: docker.elastic.co/elasticsearch/elasticsearch
-  tag: 7.9.0
+  tag: 8.0.0-SNAPSHOT
   pullPolicy: IfNotPresent
 
 deployment:

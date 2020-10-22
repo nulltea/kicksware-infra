@@ -1,0 +1,10 @@
+extraArgs:
+ metric-resolution: 30s
+ requestheader-allowed-names: aggregator
+ kubelet-insecure-tls: true
+ kubelet-preferred-address-types: InternalIP
+
+apiService:
+ create: true
+
+ hostNetwork: true

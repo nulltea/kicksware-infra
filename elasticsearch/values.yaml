@@ -5,7 +5,7 @@ fullnameOverride: ""
 
 image:
   repository: docker.elastic.co/elasticsearch/elasticsearch
-  tag: 7.9.0
+  tag: 8.0.0-SNAPSHOT
   pullPolicy: IfNotPresent
 
 deployment:
@@ -39,20 +39,17 @@ ingress:
 volumes:
   - name: cert
     persistent:
-      claim: elasticsearch-dataclaim
+      claim: elasticsearch-dbclaim
       storageClass: nfs
-      size: 10Gi
+      size: 30Gi
       accessModes:
         - ReadWriteOnce
     mountPath: /usr/share/elasticsearch/data
-  - name: nfs
-    persistent:
-      claim: elasticsearch-backupclaim
-      storageClass: nfs
-      size: 1Gi
-      accessModes:
-        - ReadWriteOnce
-    mountPath: /source/backup
+
+config:
+  elasticsearch.yml: |
+    cluster.name: "docker-cluster"
+    network.host: 0.0.0.0
 
 environment: {}
 

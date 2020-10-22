@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="https://kicksware.com">
-		<img src="https://img.shields.io/website?label=Visit%20website&down_message=unavailable&up_color=teal&up_message=kicksware.com%20%7C%20online&url=https%3A%2F%2Fkicksware.com">
+		<img src="https://img.shields.io/website?label=Visit%20website&down_message=unavailable&up_color=teal&up_message=kicksware.com%20%7C%20online&url=https%3A%2F%2Fhealth.kicksware.com/ready">
 	</a>
 </p>
 
@@ -24,6 +24,7 @@ _**Kicksware Tool Stack**_ is a composite [DevOps][devops] technology stack solu
 ## Table of contents
 
 * [Overview](#overview)
+* [Table of contents](#table-of-contents)
 * [DevOps](#devops)
 * [Applications](#applications)
 * [Requirements](#requirements)

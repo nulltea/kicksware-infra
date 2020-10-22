@@ -41,8 +41,6 @@ spec:
             - name: transport
               containerPort: {{ .Values.service.transportPort }}
           env:
-            - name: xpack.monitoring.enabled
-              value: "false"
             - name: xpack.watcher.enabled
               value: "false"
             - name: network.host
@@ -54,15 +52,21 @@ spec:
             - name: ES_JAVA_OPTS
               value: "-Xms512m -Xmx512m"
           volumeMounts:
-            {{- range .Values.volumes }}
+          {{- range .Values.volumes }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
-            {{- end }}
+          {{- end }}
+          {{- range $path, $config := .Values.config }}
+            - name: config
+              mountPath: /usr/share/elasticsearch/config/{{ $path }}
+              subPath: {{ $path }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /
               port: {{ .Values.service.port }}
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
+            periodSeconds: 15
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
       initContainers:
@@ -74,6 +78,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sysctl", "-w", "vm.max_map_count=262144"]
       volumes:
+        - name: config
+          configMap:
+            name: {{ template "chart.fullname" . }}-config
         {{- range .Values.volumes }}
         - name: {{ .name }}
           {{- with .host }}

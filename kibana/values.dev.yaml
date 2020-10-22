@@ -8,7 +8,7 @@ elasticsearchHost: https://search.kicksware.com:443
 
 image:
   repository: docker.elastic.co/kibana/kibana
-  tag: 7.9.0
+  tag: 8.0.0-SNAPSHOT
   pullPolicy: IfNotPresent
 
 deployment:
