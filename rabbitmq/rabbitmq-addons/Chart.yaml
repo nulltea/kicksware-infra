@@ -1,0 +1,11 @@
+apiVersion: v2
+name: rabbitmq-addons
+description: RabbitMQ additional componenets
+type: application
+version: 0.1.0
+appVersion: 1.0.0
+sources:
+  - https://github.com/helm/charts/tree/master/stable/rabbitmq
+  - https://github.com/timoth-y/kicksware-tool-stack
+maintainers:
+  - name: Timothy Yalugin

@@ -5,18 +5,18 @@ daemonset:
   hostNetworking: true
   resources:
     requests:
-      cpu: "50m"
-      memory: "50Mi"
+      cpu: "25m"
+      memory: "25Mi"
     limits:
-      cpu: "50m"
-      memory: "50Mi"
+      cpu: "25m"
+      memory: "25Mi"
 
 deployment:
   enabled: true
   resources:
     requests:
-      cpu: "50m"
-      memory: "50Mi"
+      cpu: "25m"
+      memory: "25Mi"
     limits:
-      cpu: "100m"
-      memory: "250Mi"
+      cpu: "50Mi"
+      memory: "50Mi"

@@ -1,0 +1,30 @@
+image:
+  registry: docker.io
+  repository: bitnami/rabbitmq
+  tag: 3.8.2-debian-10-r30
+  debug: false
+  pullPolicy: IfNotPresent
+
+rbacEnabled: true
+
+auth:
+  username: user
+  # existingPasswordSecret: rabbitmq-auth
+
+  ## Erlang cookie to determine whether different nodes are allowed to communicate with each other
+  # erlangCookie:
+  # existingErlangSecret: name-of-existing-secret
+
+logs: '-'
+
+plugins: "rabbitmq_management rabbitmq_peer_discovery_k8s"
+
+
+service:
+  type: ClusterIP
+  port: 5672
+  tlsPort: 5671
+  distPort: 25672
+  managerPort: 15672
+
+replicas: 1

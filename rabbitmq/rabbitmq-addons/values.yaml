@@ -1,0 +1,36 @@
+project: kicksware
+component: rabbitmq
+nameOverride: ""
+fullnameOverride: ""
+deployment:
+  replicaCount: 1
+
+ingress:
+  enabled: true
+  entrypoints:
+    - web
+    - websecure
+  tls:
+    enabled: true
+    certResolver: le
+    secretName: rabbitmq-tls
+    passthrough: false
+  routes:
+    http:
+      - host: mq.kicksware.com
+        paths:
+          - /
+        middlewares: []
+        services:
+          - name: rabbitmq
+            port: 15672
+            scheme: http
+    tcp:
+      - host: amqp.kicksware.com
+        paths:
+          - /
+        middlewares: [ ]
+        services:
+          - name: rabbitmq
+            port: 5672
+
