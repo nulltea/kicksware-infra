@@ -97,7 +97,7 @@ See [other Kicksware project repositories][kicksware-main-repo].
 
 Licensed under the [GNU AGPL-3.0][license file].
 
-[repo logo]: https://ci.kicksware.com/kicksware/tool-stack/-/raw/master/assets/repo-logo.png
+[repo logo]: https://raw.githubusercontent.com/timoth-y/kicksware-tool-stack/master/assets/repo-logo.png
 [kicksware url]: https://www.kicksware.com
 
 [Website badge]: https://img.shields.io/website?label=Visit%20website&down_message=unavailable&up_color=teal&up_message=kicksware.com%20%7C%20online&url=https%3A%2F%2Fkicksware.com
