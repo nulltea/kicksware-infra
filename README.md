@@ -120,7 +120,7 @@ Licensed under the [GNU AGPL-3.0][license file].
 [gitlab ci]: https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/
 [gitlab features]: https://about.gitlab.com/features/
 
-[kicksware ci browser]: https://ci.kicksware.com/kicksware/tool-stack/-/raw/master/assets/gitlab-browser.png
+[kicksware ci browser]: https://raw.githubusercontent.com/timoth-y/kicksware-tool-stack/master/assets/gitlab-browser.png
 [kicksware ci url]: https://ci.kicksware.com/kicksware
 
 [postgresql]: https://www.postgresql.org/
@@ -134,7 +134,7 @@ Licensed under the [GNU AGPL-3.0][license file].
 [elastic beats]: https://www.elastic.co/beats/
 [elastic co]: https://www.elastic.co/about/
 
-[kibana browser]: https://ci.kicksware.com/kicksware/tool-stack/-/raw/master/assets/kibana-browser.png
+[kibana browser]: https://raw.githubusercontent.com/timoth-y/kicksware-tool-stack/master/assets/kibana-browser.png
 [analytics url]: https://analytics.kicksware.com/app/dashboards#/view/24b8ed50-fee0-11ea-83ea-35465356722d
 
 [docker-desktop]: https://docs.docker.com/desktop/
